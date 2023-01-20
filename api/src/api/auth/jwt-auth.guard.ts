@@ -20,6 +20,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest<TUser = any>(err: any, user: any, info: any, context: any): TUser {
     const request = context.switchToHttp().getRequest();
+
     if (info instanceof TokenExpiredError) {
       throw new AppException(ERROR_CODE.AUTH_TOKEN_EXPIRED);
     }
@@ -32,10 +33,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (err || !user) throw new AppException(ERROR_CODE.AUTH_UNAUTHORIZED_ACCESS_TOKEN);
 
     if (user.status === AccountStatus.INACTIVE) {
-      throw new AppException(ERROR_CODE.ACCOUNT_NOT_ACTIVE);
+      throw new AppException(ERROR_CODE.ACCOUNT_INACTIVE);
     }
     if (user.active === false && Object.values(PATH_EXCLUDE).includes(request.path) === false) {
-      throw new AppException(ERROR_CODE.ACCOUNT_NOT_ACTIVE);
+      throw new AppException(ERROR_CODE.ACCOUNT_INACTIVE);
     }
     return user;
   }

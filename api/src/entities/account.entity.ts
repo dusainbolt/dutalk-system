@@ -14,6 +14,9 @@ export class Account extends AbstractEntity {
   @Column({ type: 'varchar', name: 'full_name', default: null })
   fullName: string;
 
+  @Column({ type: 'varchar', name: 'avatar', default: null })
+  avatar: string;
+
   @Column({ type: 'varchar', name: 'password', default: null })
   password: string;
 

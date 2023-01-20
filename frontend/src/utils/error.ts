@@ -2,7 +2,7 @@ export const ErrMsg = {
   // 0xxx AUTH
   '0004': 'Mật khẩu không chính xác',
   // 1xxx USER
-  1000: 'Tài khoản chưa kích hoạt',
+  1000: 'Tài khoản bị vô hiệu hoá',
   1001: 'Nickname hoặc email đã tồn tại',
   1002: 'Không tìm thấy tài khoản',
   1003: 'Tài khoản đã được xác minh',

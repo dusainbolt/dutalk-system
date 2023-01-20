@@ -47,10 +47,10 @@ export const ERROR: Record<ERROR_CODE, AppError> = {
   },
 
   // ACCOUNT 1xxx
-  [ERROR_CODE.ACCOUNT_NOT_ACTIVE]: {
+  [ERROR_CODE.ACCOUNT_INACTIVE]: {
     code: '1000',
     message: 'User not active',
-    status: HttpStatus.FORBIDDEN,
+    status: HttpStatus.OK,
   },
   [ERROR_CODE.ACCOUNT_USERNAME_EMAIL_ALREADY_REGISTER]: {
     code: '1001',

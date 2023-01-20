@@ -52,6 +52,6 @@ export const styleRegister: Record<PropertyNames, SxProps<Theme>> = {
     margin: '10px auto',
     display: 'block',
     textAlign: 'center',
-    ...DEFAULT_STYLE.btnStyle('#fe6347'),
+    ...DEFAULT_STYLE.btnStyle('#383E93'),
   },
 };

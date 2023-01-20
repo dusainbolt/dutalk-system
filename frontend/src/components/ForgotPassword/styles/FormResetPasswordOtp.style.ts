@@ -16,7 +16,7 @@ export const styleFormResetPasswordOtp: Record<PropertyNames, SxProps<Theme>> = 
       fontSize: '20px',
     },
   },
-  btnConfirm: { width: '100%', mt: 3, mb: 1, ...DEFAULT_STYLE.btnStyle('#fe6347') },
+  btnConfirm: { width: '100%', mt: 3, mb: 1, ...DEFAULT_STYLE.btnStyle('#383E93') },
   description_1: {
     padding: 1,
     background: '#a0d4967a',

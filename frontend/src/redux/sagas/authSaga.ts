@@ -26,6 +26,7 @@ import {
   verifyOtpRegisterSuccess,
 } from '@redux/slices/authSlice';
 import { AuthRequest } from '@request/authRequset';
+import axios from '@request/axios';
 import Constant from '@utils/constant';
 import Helper from '@utils/helper';
 import { delay, put, takeLatest } from 'redux-saga/effects';
@@ -35,8 +36,8 @@ function* watchLogin({ payload }: LoginStartAction) {
     const response = yield AuthRequest.signIn(payload);
     yield delay(Constant.delayAPI);
     if (Helper.isOkResponse(response)) {
+      yield axios.setTokenRequest(response.data?.token as any);
       yield put(loginSuccess(response.data));
-      //   yield axios.setTokenRequest(response.data?.token as any);
     } else {
       yield put(loginError(response));
     }

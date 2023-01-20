@@ -1,3 +1,5 @@
+import { AppError } from './context';
+
 export enum AccountStatus {
   NOT_VERIFY = 'not_verify',
   ACTIVE = 'active',
@@ -16,9 +18,17 @@ export type Account = {
   fullName: string;
   id: number;
   password: string;
+  avatar: string;
   role: AccountRole;
   status: AccountStatus;
   updatedBy: string;
   updatedOn: string;
   username: string;
+};
+
+export type AccountSlice = {
+  account?: Account;
+  isLoadedAccount?: boolean;
+  loadingAccount?: boolean;
+  errorGetAccount?: AppError;
 };

@@ -70,6 +70,18 @@ export class AuthHelper {
     if (!isMatchPassword) throw new AppException(ERROR_CODE.AUTH_PASSWORD_INCORRECT);
   };
 
+  checkUserStatusLogin = async (account: Account) => {
+    // if sign but account not verify
+    if (account.status === AccountStatus.NOT_VERIFY) {
+      await this.generateOtpConfirmAndSendMail(account);
+      throw new AppException(ERROR_CODE.ACCOUNT_NOT_VERIFIED);
+    }
+    // if account status is inactive
+    if (account.status === AccountStatus.INACTIVE) {
+      throw new AppException(ERROR_CODE.ACCOUNT_INACTIVE);
+    }
+  };
+
   isExistEmailOrUsername = (account: Account) => {
     if (!!account?.email || !!account?.username) {
       throw new AppException(ERROR_CODE.ACCOUNT_USERNAME_EMAIL_ALREADY_REGISTER);

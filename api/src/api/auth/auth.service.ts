@@ -37,11 +37,8 @@ export class AuthService {
     this.accountHelper.isExistAccount(account);
     // check password
     await this.authHelper.isMatchPassword(account, body.password);
-    // if sign but account not verify
-    if (account.status === AccountStatus.NOT_VERIFY) {
-      await this.authHelper.generateOtpConfirmAndSendMail(account);
-      throw new AppException(ERROR_CODE.ACCOUNT_NOT_VERIFIED);
-    }
+    // check user status
+    await this.authHelper.checkUserStatusLogin(account);
     // return jwt
     return { token: this.authHelper.signJWT(account) };
   }

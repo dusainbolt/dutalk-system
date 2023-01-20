@@ -7,8 +7,8 @@ export class Log extends AbstractEntity {
   @Column({ type: 'varchar', name: 'request_path' })
   requestPath: string;
 
-  @Column({ type: 'int', name: 'user_id', nullable: true })
-  userId: number;
+  @Column({ type: 'int', name: 'account_id', nullable: true })
+  accountId: number;
 
   @Column({ type: 'text', name: 'input', nullable: true })
   input: string;

@@ -40,7 +40,7 @@ export class AppExceptionFilter extends BaseExceptionFilter {
     const log = new Log();
     if (request.body.password) delete request.body.password;
     log.requestPath = request.url;
-    log.userId = (request as any).user?.sub || undefined;
+    log.accountId = request?.user?.id || undefined;
     log.input = JSON.stringify({ query: request.query, body: request.body });
     log.error = JSON.stringify(exception);
     log.type = exception instanceof AppException ? ErrorType.APP_ERROR : ErrorType.SERVER_ERROR;

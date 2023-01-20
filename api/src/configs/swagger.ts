@@ -8,10 +8,10 @@ export const setupSwagger = (app: INestApplication, version: string): void => {
     .setVersion(version)
     .addBearerAuth({
       type: `http`,
-      scheme: `bearer`,
+      scheme: `Bearer`,
       bearerFormat: `JWT`,
       name: `Authorization`,
-      description: `Please enter refreshToken in following format: Bearer <JWT>`,
+      description: `Please enter {token} in following format: Bearer <JWT>`,
       in: `header`,
     })
     .addCookieAuth(`Authentication`, {

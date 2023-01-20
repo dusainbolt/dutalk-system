@@ -10,7 +10,7 @@ type DefaultStyle = {
 };
 
 export const DEFAULT_STYLE: DefaultStyle = {
-  primaryClor: '#fe6347',
+  primaryClor: '#383E93',
   container: {
     minHeight: '100vh',
     display: 'flex',

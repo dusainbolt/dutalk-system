@@ -5,5 +5,5 @@ import { AccountHelper } from './account.helper.service';
 export class AccountService {
   constructor(private readonly accountHelper: AccountHelper) {}
 
-  // async createAccount(data: AccountRegistrationDto) {}
+  async getAccountInfo() {}
 }

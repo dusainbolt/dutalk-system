@@ -159,4 +159,4 @@ export const {
   resetPasswordOtpError,
 } = authSlice.actions;
 
-export default persistReducer(getPersistConfig(sliceName, { whitelist: ['token', 'user'] }), authSlice.reducer);
+export default persistReducer(getPersistConfig(sliceName, { whitelist: ['token'] }), authSlice.reducer);

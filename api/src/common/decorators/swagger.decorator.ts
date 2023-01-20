@@ -1,4 +1,4 @@
-import { applyDecorators, Controller, HttpStatus } from '@nestjs/common';
+import { applyDecorators, Controller, HttpStatus, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
@@ -26,6 +26,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ReasonPhrases } from 'http-status-codes';
+import { JwtAuthGuard } from 'src/api/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/api/auth/roles.guard';
 // import { JwtAuthGuard } from 'src/api/auth/jwt-auth.guard';
 // import { RolesGuard } from 'src/api/auth/roles.guard';
 import commonConstant, { DATE_FORMAT } from 'src/common/constant';
@@ -85,11 +87,11 @@ export function IsAuthController(name: string, apiTag: string, isRequire = true)
     Controller(name),
     ApiTags(apiTag),
     ApiBearerAuth(),
-    // ...(isRequire ? [UseGuards(JwtAuthGuard, RolesGuard)] : []),
+    ...(isRequire ? [UseGuards(JwtAuthGuard, RolesGuard)] : []),
     ...(isRequire
       ? [
           ApiUnauthorizedResponse({
-            description: `Require token in cookie header`,
+            description: `Require token in header`,
             type: UnauthorizedDto,
           }),
           ApiForbiddenResponse({

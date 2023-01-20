@@ -1,10 +1,13 @@
 import ProfileComponent from '@components/Profile/ProfileComponent';
+import { useGetAccountInfo } from '@hooks/useGetAccountInfo';
 import { useRedirectAuth } from '@hooks/useRedirectAuth';
 import Head from 'next/head';
 import { FC, Fragment } from 'react';
 
 const ProfilePage: FC<any> = () => {
   const token = useRedirectAuth({ redirect: '/', isEmptyToken: false });
+  useGetAccountInfo(token as string);
+
   return (
     <Fragment>
       <Head>
