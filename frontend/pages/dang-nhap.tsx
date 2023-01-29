@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { FC, Fragment } from 'react';
 
 const LoginPage: FC<any> = () => {
-  const token = useRedirectAuth({ redirect: '/trang-ca-nhan', isEmptyToken: true });
+  const token = useRedirectAuth({ redirect: '/hop-thu', isEmptyToken: true });
 
   return (
     <Fragment>

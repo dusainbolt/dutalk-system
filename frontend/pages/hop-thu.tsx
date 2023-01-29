@@ -1,4 +1,4 @@
-import ProfileComponent from '@components/Profile/ProfileComponent';
+import { InboxComponent } from '@components/Inbox/InboxComponent';
 import { useGetAccountInfo } from '@hooks/useGetAccountInfo';
 import { useRedirectAuth } from '@hooks/useRedirectAuth';
 import Head from 'next/head';
@@ -11,10 +11,10 @@ const ProfilePage: FC<any> = () => {
   return (
     <Fragment>
       <Head>
-        <title>DuTalk | Trang cá nhân</title>
+        <title>DuTalk</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      {token && <ProfileComponent />}
+      {token && <InboxComponent />}
     </Fragment>
   );
 };

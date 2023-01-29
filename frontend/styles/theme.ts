@@ -3,27 +3,22 @@ import { PaletteMode } from '@mui/material';
 import Constant from '@utils/constant';
 
 type DefaultStyle = {
-  primaryClor: string;
-  container: any;
-  main: any;
+  primaryColor: string;
+  ellipseText: (row: number) => any;
   btnStyle: (color?: string) => any;
 };
 
 export const DEFAULT_STYLE: DefaultStyle = {
-  primaryClor: '#383E93',
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    maxWidth: 1280,
-    margin: 'auto',
-  },
-  main: {
-    marginTop: 100,
-  },
-  btnStyle: (color: string = DEFAULT_STYLE.primaryClor) => ({
+  primaryColor: '#383E93',
+  ellipseText: (row: number) => ({
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    WebkitBoxAlign: 'start',
+    WebkitLineClamp: row,
+  }),
+  btnStyle: (color: string = DEFAULT_STYLE.primaryColor) => ({
     borderColor: color,
     background: color,
 
