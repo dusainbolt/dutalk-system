@@ -72,4 +72,11 @@ export const ERROR: Record<ERROR_CODE, AppError> = {
     message: `User isn't verified`,
     status: HttpStatus.OK,
   },
+
+  // TOPIC 2xxx
+  [ERROR_CODE.TOPIC_TITLE_EXIST_BY_ACCOUNT]: {
+    code: '2000',
+    message: `Topic title is exist by account`,
+    status: HttpStatus.OK,
+  },
 };

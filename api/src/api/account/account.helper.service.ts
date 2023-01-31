@@ -22,6 +22,10 @@ export class AccountHelper {
     return await this.accountRepo.save(data);
   }
 
+  async getAccByCredential(credential: string): Promise<Account> {
+    return this.findAccountWhere([{ email: credential }, { username: credential }]);
+  }
+
   isExistAccount = (account: Account) => {
     if (!account) {
       throw new AppException(ERROR_CODE.ACCOUNT_NOT_FOUND);

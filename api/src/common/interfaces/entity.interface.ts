@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class AbstractEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'int' })
@@ -11,13 +11,7 @@ export abstract class AbstractEntity extends BaseEntity {
   @CreateDateColumn({ name: 'created_On' })
   createdOn: Date;
 
-  @Column({ name: 'created_by', default: 'SA', length: 255 })
-  createdBy: string;
-
   // This date is being updated each time you persist the object.
   @UpdateDateColumn({ name: 'updated_On' })
   updatedOn: Date;
-
-  @Column({ name: 'updated_by', default: 'SA', length: 255 })
-  updatedBy: string;
 }

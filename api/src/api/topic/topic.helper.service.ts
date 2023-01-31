@@ -1,0 +1,51 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ERROR_CODE } from 'src/common/interfaces';
+import { IPaginationRequest, PaginateOptionsDto } from 'src/common/pagination';
+import { Account } from 'src/entities/account.entity';
+import { Topic } from 'src/entities/topic.entity';
+import { AppException } from 'src/middleware';
+import {
+  DeepPartial,
+  FindOptionsWhere,
+  Repository,
+  Like,
+  FindOptionsOrder,
+  FindManyOptions,
+  FindOptionsRelations,
+} from 'typeorm';
+
+@Injectable()
+export class TopicHelper {
+  constructor(@InjectRepository(Topic) private topicRepo: Repository<Topic>) {}
+
+  async insertTopic(data: DeepPartial<Topic>): Promise<Topic> {
+    return await this.topicRepo.save(data);
+  }
+
+  async findTopic(filter: FindOptionsWhere<Topic>): Promise<Topic> {
+    return await this.topicRepo.findOneBy(filter);
+  }
+
+  async updateTopic(id: number, data: DeepPartial<Topic>): Promise<Topic> {
+    await this.topicRepo.update({ id }, data);
+    return this.findTopic({ id });
+  }
+
+  async findTopics(
+    filter: FindOptionsWhere<Topic>[] | FindOptionsWhere<Topic>,
+    options: {
+      order?: FindOptionsOrder<Topic>;
+      skip?: number;
+      take?: number;
+      relations?: FindOptionsRelations<Topic>;
+    },
+  ): Promise<Topic[]> {
+    return await this.topicRepo.find({ where: filter, ...options });
+  }
+
+  async checkCorrectTitle(userId, title) {
+    const topic = await this.findTopic({ accountId: userId, title });
+    if (!!topic) throw new AppException(ERROR_CODE.TOPIC_TITLE_EXIST_BY_ACCOUNT);
+  }
+}

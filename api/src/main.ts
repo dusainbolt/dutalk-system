@@ -8,6 +8,7 @@ import { setupSwagger } from './configs/swagger';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import { TrimPipe } from './common/pipe/TrimPipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -22,7 +23,7 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.useLogger(logger);
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }), new TrimPipe());
   app.useGlobalFilters(new AppExceptionFilter(logger, httpAdapter));
   app.useGlobalInterceptors(new LoggerErrorInterceptor(), new TransformInterceptor());
 

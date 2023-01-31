@@ -32,7 +32,7 @@ export class AuthService {
 
   async signIn(body: AuthSignInDto) {
     const { credential } = body;
-    const account = await this.accountHelper.findAccountWhere([{ email: credential }, { username: credential }]);
+    const account = await this.accountHelper.getAccByCredential(credential);
     // check account
     this.accountHelper.isExistAccount(account);
     // check password
@@ -45,7 +45,7 @@ export class AuthService {
 
   async verifyAccount(body: AuthVerifyAccountDto) {
     const { credential } = body;
-    const account = await this.accountHelper.findAccountWhere([{ email: credential }, { username: credential }]);
+    const account = await this.accountHelper.getAccByCredential(credential);
     // check account
     this.accountHelper.isExistAccount(account);
     this.accountHelper.isAccountNotVerify(account);
@@ -59,7 +59,7 @@ export class AuthService {
 
   async forgotPassword(body: AuthForgotPasswordDto) {
     const { credential } = body;
-    const account = await this.accountHelper.findAccountWhere([{ email: credential }, { username: credential }]);
+    const account = await this.accountHelper.getAccByCredential(credential);
     // check account
     this.accountHelper.isExistAccount(account);
     await this.authHelper.generateOtpForgotPasswordAndSendMail(account);
@@ -68,7 +68,7 @@ export class AuthService {
 
   async resetPassword(body: AuthResetPassword) {
     const { credential } = body;
-    const account = await this.accountHelper.findAccountWhere([{ email: credential }, { username: credential }]);
+    const account = await this.accountHelper.getAccByCredential(credential);
     // check account
     this.accountHelper.isExistAccount(account);
     // check otp

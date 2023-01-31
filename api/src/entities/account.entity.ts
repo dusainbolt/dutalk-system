@@ -1,7 +1,9 @@
 import { AccountRole, AccountStatus } from 'src/api/account/account.interface';
 import { ENTITY_NAME } from 'src/common/constant';
 import { AbstractEntity } from 'src/common/interfaces';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Message } from './message.entity';
+import { Topic } from './topic.entity';
 
 @Entity(ENTITY_NAME.ACCOUNT)
 export class Account extends AbstractEntity {
@@ -25,4 +27,10 @@ export class Account extends AbstractEntity {
 
   @Column({ type: 'enum', enum: Object.values(AccountRole), default: AccountRole.USER })
   role: AccountRole;
+
+  @OneToMany(() => Topic, topic => topic.account)
+  topics?: Topic[];
+
+  @OneToMany(() => Message, message => message.account)
+  messages?: Message[];
 }

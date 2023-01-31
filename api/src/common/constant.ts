@@ -29,6 +29,8 @@ export const ENTITY_NAME = {
   ACCOUNT: `account`,
   WALLET: `wallet`,
   LOG: `log`,
+  topic: `topic`,
+  message: `message`,
 };
 
 export const DATE_FORMAT = {
