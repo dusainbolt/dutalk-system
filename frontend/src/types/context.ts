@@ -17,3 +17,15 @@ export interface AppError {
 }
 
 export type ErrorAction = Record<PayloadName, AppError>;
+
+export interface IPaginationQuery {
+  search?: string;
+  filter?: Record<string, any>;
+  order?: any;
+  group?: string;
+  from?: Date;
+  to?: Date;
+  page?: number;
+  limit?: number;
+  // [key: string]: any;
+}

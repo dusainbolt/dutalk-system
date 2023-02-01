@@ -7,6 +7,8 @@ export const ErrMsg = {
   1002: 'Không tìm thấy tài khoản',
   1003: 'Tài khoản đã được xác minh',
   1004: 'Tài khoản chưa được xác minh',
+  // 2xxx TOPIC
+  2000: 'Tiêu đề đã được tạo',
 };
 
 export const ErrCode = {

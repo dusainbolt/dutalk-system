@@ -9,7 +9,7 @@ import { FC, Fragment, useMemo } from 'react';
 import { validateOtpRegister, validateRegister, valuesOtpRegister, valuesRegister } from 'src/yup/validateAuth';
 import { FormRegister } from './FormRegister';
 import { FormRegisterOtp } from './FormRegisterOtp';
-import { styleRegister as styles } from './styles/RegisterComponent.style';
+import { styleRegister as styles } from './styles/Register.style';
 
 const RegisterComponent: FC<any> = () => {
   const { stepRegister } = useAppSelector(getAuthSlice);

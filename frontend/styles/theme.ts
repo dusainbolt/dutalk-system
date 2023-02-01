@@ -6,6 +6,7 @@ type DefaultStyle = {
   primaryColor: string;
   ellipseText: (row: number) => any;
   btnStyle: (color?: string) => any;
+  scrollBar: any;
 };
 
 export const DEFAULT_STYLE: DefaultStyle = {
@@ -28,6 +29,21 @@ export const DEFAULT_STYLE: DefaultStyle = {
       opacity: 0.7,
     },
   }),
+  scrollBar: {
+    scrollbarWidth: 'thin',
+    '&::-webkit-scrollbar': {
+      width: '0.4em',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#888',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555',
+    },
+  },
 };
 
 // Create a theme instance.

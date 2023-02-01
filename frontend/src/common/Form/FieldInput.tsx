@@ -54,7 +54,7 @@ const FieldText: FC<FieldTextType> = ({ label, className, field, sx, block, fiel
   };
 
   return (
-    <Box sx={{ mt: 1, ...sx }} className={clsx(className)}>
+    <Box sx={{ mt: 1, width: '100%', ...sx }} className={clsx(className)}>
       <FormLabel fieldName={field?.name} label={label} />
       <TextField
         fullWidth

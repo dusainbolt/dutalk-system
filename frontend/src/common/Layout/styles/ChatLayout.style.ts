@@ -1,4 +1,5 @@
 import { SxProps, Theme } from '@mui/material';
+import { DEFAULT_STYLE } from '@styles/theme';
 
 type PropertyNames = 'toolbar' | 'buttonAddTopic' | 'boxChatList' | 'appBar' | 'boxMain';
 
@@ -11,7 +12,15 @@ export const styleChatLayout: Record<PropertyNames, SxProps<Theme>> = {
       height: 64,
     } as SxProps<Theme>),
   buttonAddTopic: { height: 34, borderRadius: 8 },
-  boxChatList: { p: 1, position: 'absolute', top: 64, maxHeight: 'calc(100% - 64px)', overflow: 'auto', width: '100%' },
+  boxChatList: {
+    p: 1,
+    position: 'absolute',
+    top: 64,
+    maxHeight: 'calc(100% - 64px)',
+    height: '100%',
+    overflow: 'auto',
+    width: '100%',
+  },
   appBar: (drawerWidth): any =>
     ({
       background: 'white',
@@ -22,11 +31,11 @@ export const styleChatLayout: Record<PropertyNames, SxProps<Theme>> = {
   boxMain: (drawerWidth): any =>
     ({
       flexGrow: 1,
-      p: 3,
       background: '#f5e5eb',
       width: { sm: `calc(100% - ${drawerWidth}px)` },
       mt: '64px',
       maxHeight: 'calc(100vh - 64px)',
-      overflow: 'auto',
+      overflow: 'hidden',
+      position: 'relative',
     } as SxProps<Theme>),
 };
