@@ -89,8 +89,8 @@ const topicSlice = createSlice({
     // receive emit socket message
     socketTopicMessagesReceive: (state: TopicSlice, { payload }: SocketTopicMessagesReceiveAction) => {
       // is same topic of topic messages
-      if (state.topicMessages?.length && state.topicMessages[0].topicId === payload.topicId) {
-        state.topicMessages?.push(payload);
+      if (state.topicMessages?.length && state.topicMessages[0].topicId === payload.topic.id) {
+        state.topicMessages?.push(payload.message);
       }
     },
   },

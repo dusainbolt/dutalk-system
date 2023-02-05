@@ -9,16 +9,14 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppSelector } from '@redux/store';
-import { DEFAULT_STYLE } from '@styles/theme';
 import { Formik } from 'formik';
 import { ReactNode, useEffect, useState } from 'react';
 import { validateCreateTopic, valuesCreateTopic } from 'src/yup/validateTopic';
 import { ChatList } from '../../components/Inbox/ChatList';
 import { ChatMenu } from '../../components/Inbox/ChatMenu';
-import { styleChatLayout as styles } from './styles/ChatLayout.style';
+import { chatLayoutStyles } from './styles/ChatLayout.style';
 
 const drawerWidth = 320;
 
@@ -39,6 +37,7 @@ export const ChatLayout = (props: Props) => {
   const [isCreatingTopic, setIsCreatingTopic] = useState<boolean>(false);
   const { newTopicId } = useAppSelector(getTopicSlice);
   const { getMyTopic } = useTopic();
+  const styles = chatLayoutStyles(drawerWidth)();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -53,7 +52,7 @@ export const ChatLayout = (props: Props) => {
 
   const drawer = (
     <Box>
-      <Toolbar className="toolbar" sx={(styles as any).toolbar(drawerWidth)}>
+      <Toolbar className={styles.toolbar}>
         <Stack direction="row" alignItems="center">
           <ChatMenu />
           <Button
@@ -62,7 +61,7 @@ export const ChatLayout = (props: Props) => {
             disableElevation
             onClick={() => setIsCreatingTopic((isCreatingTopic) => !isCreatingTopic)}
             startIcon={<AddCircleRoundedIcon />}
-            sx={styles.buttonAddTopic}
+            className={styles.buttonAddTopic}
           >
             Tạo chủ đề
           </Button>
@@ -70,7 +69,7 @@ export const ChatLayout = (props: Props) => {
       </Toolbar>
       <Divider />
       <Fade in={isCreatingTopic}>
-        <Box sx={styles.boxChatList}>
+        <Box className={styles.boxChatList}>
           <Formik
             onSubmit={props.onSubmitCreateTopic}
             validationSchema={validateCreateTopic}
@@ -81,7 +80,7 @@ export const ChatLayout = (props: Props) => {
         </Box>
       </Fade>
       <Fade in={!isCreatingTopic}>
-        <Box sx={styles.boxChatList}>
+        <Box className={styles.boxChatList}>
           <ChatList />
         </Box>
       </Fade>
@@ -91,10 +90,10 @@ export const ChatLayout = (props: Props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" sx={(styles as any).appBar(drawerWidth)}>
+      <AppBar position="fixed" className={styles.appBar}>
         <Toolbar>{props.contentAppBar}</Toolbar>
       </AppBar>
-      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+      <Box component="nav" className={styles.navDrawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
@@ -122,7 +121,7 @@ export const ChatLayout = (props: Props) => {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={(styles as any).boxMain(drawerWidth)}>
+      <Box component="main" className={styles.boxMain}>
         {/* eslint-disable-next-line react/destructuring-assignment */}
         {props.children}
       </Box>

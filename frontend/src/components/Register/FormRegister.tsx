@@ -5,11 +5,12 @@ import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
 import { AlertErrorApp } from 'src/shared/Alert/AlertErrorApp';
-import { styleFormRegister as styles } from './styles/FormRegister.style';
+import { formRegisterStyles } from './styles/FormRegister.style';
 
 export const FormRegister = () => {
   const { handleSubmit } = useFormikContext();
   const { loadingRegister, errorRegister } = useAppSelector(getAuthSlice);
+  const styles = formRegisterStyles();
   return (
     <Stack>
       <AlertErrorApp error={errorRegister} />
@@ -41,7 +42,12 @@ export const FormRegister = () => {
           component={FieldText}
           type="password"
         />
-        <Button loading={loadingRegister} onClick={handleSubmit as any} sx={styles.btnRegister} variant="contained">
+        <Button
+          loading={loadingRegister}
+          onClick={handleSubmit as any}
+          className={styles.btnRegister}
+          variant="contained"
+        >
           ĐĂNG KÝ
         </Button>
         <Box sx={{ mt: 3, mb: 3 }}>
@@ -57,7 +63,7 @@ export const FormRegister = () => {
         </Box>
         <Divider />
 
-        <Button href="/dang-nhap" sx={styles.btnLoginNow} variant="contained">
+        <Button href="/dang-nhap" className={styles.btnLoginNow} variant="contained">
           Đăng nhập ngay
         </Button>
       </>

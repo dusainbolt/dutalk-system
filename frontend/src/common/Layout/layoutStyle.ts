@@ -41,7 +41,7 @@ export const layoutStyle = makeStyles((theme: Theme) => ({
   },
   navWrap: {
     marginTop: theme.spacing(2),
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
     overflow: 'hidden',
     '& a.MuiLink-root': {
       width: '100%',
@@ -82,7 +82,7 @@ export const layoutStyle = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     flex: '1 1',
     border: '1px solid #e8ebed',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
   },
   walletWrap: {
     flex: '1 1',
@@ -91,7 +91,7 @@ export const layoutStyle = makeStyles((theme: Theme) => ({
   },
   walletAddress: {
     border: '1px solid #dc6a00',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
     padding: theme.spacing(1),
     color: '#dc6a00',
     display: 'flex',

@@ -7,11 +7,12 @@ import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { AlertErrorApp } from 'src/shared/Alert/AlertErrorApp';
-import { styleFormResetPasswordOtp as styles } from './styles/FormResetPasswordOtp.style';
+import { formResetPasswordOtpStyles } from './styles/FormResetPasswordOtp.style';
 
 export const FormResetPasswordOtp = () => {
   const { handleSubmit, setFieldValue } = useFormikContext();
   const { loadingResetPasswordOtp, errorResetPasswordOtp, credential } = useAppSelector(getAuthSlice);
+  const styles = formResetPasswordOtpStyles();
 
   useEffect(() => {
     setFieldValue('credential', credential);
@@ -20,11 +21,11 @@ export const FormResetPasswordOtp = () => {
   return (
     <Stack>
       <AlertErrorApp error={errorResetPasswordOtp} />
-      <Typography sx={styles.description_1}>
+      <Typography className={styles.description_1}>
         Mã xác nhận đã được gửi tới địa chỉ email của tài khoản: <b>{credential}</b>. Vui lòng kiểm tra email và nhập
         đoạn mã dưới đây:
       </Typography>
-      <Box sx={styles.boxOtp}>
+      <Box className={styles.boxOtp}>
         <Field name="otp" label="Nickname" className="otp-register-input" component={FieldOtp} />
         <Field
           name="password"
@@ -43,7 +44,7 @@ export const FormResetPasswordOtp = () => {
         <Button
           onClick={handleSubmit as any}
           loading={loadingResetPasswordOtp}
-          sx={styles.btnConfirm}
+          className={styles.btnConfirm}
           variant="contained"
         >
           Xác minh

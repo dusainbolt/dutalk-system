@@ -22,7 +22,7 @@ import { IConfigRedis } from 'src/common/interfaces';
 import { Generate } from 'src/common/utils/generate.utils';
 import config from 'src/configs';
 import { Account } from 'src/entities/account.entity';
-import { SocketSendMessageDto } from './interfaces/messages.interface';
+import { SocketSendMessageDto, SocketTopicMessagesReceiveDto } from './interfaces/messages.interface';
 
 @WebSocketGateway(config.server.port + 1)
 // @WebSocketGateway(config.server.port + 1, { cors: true, transports: ['websocket', 'polling'] })
@@ -67,8 +67,8 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
         // accountId: userId === 1 ? null : userId,
         topicId: data.topicId,
       });
-      console.log(userId);
-      this.server.emit(`message_received_${userId}`, newMessage);
+      const topic = await this.topicHelper.updateLatestMessage(data.topicId, newMessage.id);
+      this.server.emit(`message_received_${userId}`, { message: newMessage, topic } as SocketTopicMessagesReceiveDto);
       console.log('Data: ', data);
     } catch (e) {
       this.logger.info(e, 'receiveMessagesFromClient ERROR:');

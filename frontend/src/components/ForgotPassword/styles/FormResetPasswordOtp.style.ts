@@ -1,26 +1,28 @@
-import { SxProps, Theme } from '@mui/material';
+import { Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { DEFAULT_STYLE } from '@styles/theme';
 
-type PropertyNames = 'boxOtp' | 'btnConfirm' | 'description_1';
-
-export const styleFormResetPasswordOtp: Record<PropertyNames, SxProps<Theme>> = {
+export const formResetPasswordOtpStyles = makeStyles((theme: Theme) => ({
   boxOtp: {
     '& .otp-register-input': {
       width: '95% !important',
       height: '45px',
-      borderRadius: 2,
-      border: '0px',
-      // marginLeft: '8px',
-      // marginRight: '8px',
+      borderRadius: theme.spacing(1),
+      border: 0,
       background: '#dddddd',
-      fontSize: '20px',
+      fontSize: 20,
     },
   },
-  btnConfirm: { width: '100%', mt: 3, mb: 1, ...DEFAULT_STYLE.btnStyle('#383E93') },
-  description_1: {
-    padding: 1,
-    background: '#a0d4967a',
-    borderRadius: 2,
-    mb: 2,
+  btnConfirm: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    ...DEFAULT_STYLE.btnStyle('#383E93'),
   },
-};
+  description_1: {
+    padding: theme.spacing(1),
+    background: '#a0d4967a',
+    borderRadius: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+  },
+}));

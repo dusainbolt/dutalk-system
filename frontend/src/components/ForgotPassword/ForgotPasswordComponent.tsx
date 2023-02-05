@@ -14,16 +14,17 @@ import {
 } from 'src/yup/validateAuth';
 import { FormForgotPassword } from './FormForgotPassword';
 import { FormResetPasswordOtp } from './FormResetPasswordOtp';
-import { styleForgotPassword as styles } from './styles/ForgotPassword.style';
+import { forgotPasswordStyles } from './styles/ForgotPassword.style';
 
 const ForgotPasswordComponent: FC<any> = () => {
   const { stepForgotPassword } = useAppSelector(getAuthSlice);
   const { onSubmitForgotPassword, onSubmitResetPasswordOtp } = useAuth();
+  const styles = forgotPasswordStyles();
 
   const contentRight = useMemo(() => {
     const formForgotPassword = (
       <Fragment>
-        <Typography variant="body1" sx={styles.titleContentRight} align="center">
+        <Typography variant="body1" className={styles.titleContentRight} align="center">
           Quên mật khẩu
         </Typography>
         <Formik
@@ -38,7 +39,7 @@ const ForgotPasswordComponent: FC<any> = () => {
 
     const formOtpAndPassword = (
       <Fragment>
-        <Typography variant="body1" sx={styles.titleContentRight} align="center">
+        <Typography variant="body1" className={styles.titleContentRight} align="center">
           Xác minh và đặt lại mật khẩu
         </Typography>
         <Formik
@@ -54,7 +55,7 @@ const ForgotPasswordComponent: FC<any> = () => {
     const contentResetPasswordOtpSuccess = (
       <Stack>
         <Alert severity="success">Đặt lại mật khẩu thành công. Quay lại đăng nhập ngay thôi!</Alert>
-        <Button href="/dang-nhap" sx={styles.btnLogin} variant="contained">
+        <Button href="/dang-nhap" className={styles.btnLogin} variant="contained">
           Đăng nhập
         </Button>
       </Stack>
@@ -73,22 +74,22 @@ const ForgotPasswordComponent: FC<any> = () => {
   return (
     <main>
       <Stack direction={{ xs: 'column', md: 'row' }}>
-        <Stack sx={styles.mainContentLeft} alignItems="center" justifyContent="center">
-          <Typography sx={styles.titleApp} variant="h1" align="center">
+        <Stack className={styles.mainContentLeft} alignItems="center" justifyContent="center">
+          <Typography className={styles.titleApp} variant="h1" align="center">
             DuTalk
           </Typography>
-          <Typography sx={styles.description_1} variant="h1" align="center">
+          <Typography className={styles.description_1} variant="h1" align="center">
             Nền tảng trò chuyện tâm sự khiến bạn khóc thét
           </Typography>
-          <Typography sx={styles.description_2} variant="h1" align="center">
+          <Typography className={styles.description_2} variant="h1" align="center">
             Hãy nói với tôi theo cách của bạn
           </Typography>
         </Stack>
         <Hidden mdDown>
           <Stack alignItems="center" sx={{ width: '45%' }} justifyContent="center"></Stack>
         </Hidden>
-        <Stack alignItems="center" sx={styles.mainContentRight} justifyContent="center">
-          <Box sx={styles.boxContentRight}>{contentRight}</Box>
+        <Stack alignItems="center" className={styles.mainContentRight} justifyContent="center">
+          <Box className={styles.boxContentRight}>{contentRight}</Box>
         </Stack>
       </Stack>
     </main>

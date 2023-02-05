@@ -17,9 +17,9 @@ export class TopicHelper {
     return await this.topicRepo.findOneBy(filter);
   }
 
-  async updateTopic(id: number, data: DeepPartial<Topic>): Promise<Topic> {
+  async updateTopic(id: number, data: DeepPartial<Topic>, isFindTopic = true): Promise<Topic> {
     await this.topicRepo.update({ id }, data);
-    return this.findTopic({ id });
+    return isFindTopic ? await this.findTopic({ id }) : null;
   }
 
   async findTopics(
@@ -43,5 +43,9 @@ export class TopicHelper {
     const topic = await this.findTopic({ id: topicId });
     if (topic?.accountId !== userId) throw new AppException(ERROR_CODE.TOPIC_DO_NOT_PERMISSION);
     return topic;
+  }
+
+  async updateLatestMessage(topicId, messageId): Promise<Topic> {
+    return await this.updateTopic(topicId, { latestMessageId: messageId });
   }
 }

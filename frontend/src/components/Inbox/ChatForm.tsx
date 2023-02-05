@@ -9,6 +9,7 @@ import { FC, useEffect } from 'react';
 export const ChatForm: FC<{ topicId: number | undefined }> = ({ topicId }) => {
   const { handleReset, setFieldValue } = useFormikContext();
   const { isLoadingSendMessage } = useAppSelector(getSocketSlice);
+
   useEffect(() => {
     if (topicId) {
       handleReset();
@@ -28,6 +29,7 @@ export const ChatForm: FC<{ topicId: number | undefined }> = ({ topicId }) => {
         name="message"
         fieldProps={{ placeholder: 'Nhập tin nhắn', multiline: true, maxRows: 4 } as TextFieldProps}
         onPressSubmitEnter
+        showError={false}
         component={FieldText}
       />
       <SendIcon />

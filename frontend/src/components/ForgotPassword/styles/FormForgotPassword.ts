@@ -1,10 +1,14 @@
-import { SxProps, Theme } from '@mui/material';
+import { Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { DEFAULT_STYLE } from '@styles/theme';
 
-type PropertyNames = 'linkHome' | 'btnSearch' | 'btnLogin';
-
-export const styleFormForgotPassword: Record<PropertyNames, SxProps<Theme>> = {
-  linkHome: { textAlign: 'center', display: 'block', mt: 3, color: '#383E93' },
-  btnSearch: { width: '100%', mt: 3, mb: 1, ...DEFAULT_STYLE.btnStyle() },
+export const formForgotPasswordStyles = makeStyles((theme: Theme) => ({
+  linkHome: { textAlign: 'center', display: 'block', marginTop: theme.spacing(3), color: '#383E93' },
+  btnSearch: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    ...DEFAULT_STYLE.btnStyle(),
+  },
   btnLogin: { width: '45%', margin: '10px auto' },
-};
+}));

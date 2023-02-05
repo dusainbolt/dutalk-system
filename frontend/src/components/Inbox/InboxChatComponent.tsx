@@ -19,12 +19,6 @@ export const InboxChatComponent: FC<any> = ({ window }) => {
   const [refBoxChat, setRefBoxChat] = useState<HTMLDivElement>(undefined as any);
   const { onSubmitSendMessage } = useMessage();
 
-  // const trigger = useScrollTrigger({
-  //   target: refBoxChat,
-  //   disableHysteresis: true,
-  //   threshold: 100,
-  // });
-
   // effect auto scroll box chat
   useEffect(() => {
     if (refBoxChat && topic?.id && topicMessages?.length) {

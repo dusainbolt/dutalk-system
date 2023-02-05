@@ -9,16 +9,17 @@ import { FC, Fragment, useMemo } from 'react';
 import { validateOtpRegister, validateRegister, valuesOtpRegister, valuesRegister } from 'src/yup/validateAuth';
 import { FormRegister } from './FormRegister';
 import { FormRegisterOtp } from './FormRegisterOtp';
-import { styleRegister as styles } from './styles/Register.style';
+import { registerStyles } from './styles/Register.style';
 
 const RegisterComponent: FC<any> = () => {
   const { stepRegister } = useAppSelector(getAuthSlice);
   const { onSubmitRegister, onSubmitOtp } = useAuth();
+  const styles = registerStyles();
 
   const contentRight = useMemo(() => {
     const formRegister = (
       <Fragment>
-        <Typography variant="body1" sx={styles.titleContentRight} align="center">
+        <Typography variant="body1" className={styles.titleContentRight} align="center">
           Đăng ký
         </Typography>
         <Formik onSubmit={onSubmitRegister} validationSchema={validateRegister} initialValues={valuesRegister}>
@@ -29,7 +30,7 @@ const RegisterComponent: FC<any> = () => {
 
     const formOtp = (
       <Fragment>
-        <Typography variant="body1" sx={styles.titleContentRight} align="center">
+        <Typography variant="body1" className={styles.titleContentRight} align="center">
           Xác minh địa chỉ email
         </Typography>
         <Formik onSubmit={onSubmitOtp} validationSchema={validateOtpRegister} initialValues={valuesOtpRegister}>
@@ -41,7 +42,7 @@ const RegisterComponent: FC<any> = () => {
     const registerSuccessContent = (
       <Box>
         <Alert severity="success">Xác minh thành công. Trải nghiệm dịch vụ thôi nào!</Alert>
-        <Button href="/dang-nhap" sx={styles.btnLoginNow_2} variant="contained">
+        <Button href="/dang-nhap" className={styles.btnLoginNow} variant="contained">
           Đăng nhập ngay
         </Button>
       </Box>
@@ -60,22 +61,22 @@ const RegisterComponent: FC<any> = () => {
   return (
     <main>
       <Stack direction={{ xs: 'column', md: 'row' }}>
-        <Stack sx={styles.mainContentLeft} alignItems="center" justifyContent="center">
-          <Typography sx={styles.titleApp} variant="h1" align="center">
+        <Stack className={styles.mainContentLeft} alignItems="center" justifyContent="center">
+          <Typography className={styles.titleApp} variant="h1" align="center">
             DuTalk
           </Typography>
-          <Typography sx={styles.description_1} variant="h1" align="center">
+          <Typography className={styles.description_1} variant="h1" align="center">
             Nền tảng trò chuyện tâm sự khiến bạn khóc thét
           </Typography>
-          <Typography sx={styles.description_2} variant="h1" align="center">
+          <Typography className={styles.description_2} variant="h1" align="center">
             Hãy nói với tôi theo cách của bạn
           </Typography>
         </Stack>
         <Hidden mdDown>
           <Stack alignItems="center" sx={{ width: '45%' }} justifyContent="center"></Stack>
         </Hidden>
-        <Stack alignItems="center" sx={styles.mainContentRight} justifyContent="center">
-          <Box sx={styles.boxContentRight}>{contentRight}</Box>
+        <Stack alignItems="center" className={styles.mainContentRight} justifyContent="center">
+          <Box className={styles.boxContentRight}>{contentRight}</Box>
         </Stack>
       </Stack>
     </main>

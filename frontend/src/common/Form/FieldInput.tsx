@@ -28,7 +28,7 @@ export interface FieldTextType {
 
 const FieldText: FC<FieldTextType> = ({
   label,
-  showError,
+  showError = true,
   className,
   field,
   onPressSubmitEnter,
