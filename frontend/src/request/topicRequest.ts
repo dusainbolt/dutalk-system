@@ -1,4 +1,4 @@
-import { GetMyTopicsDto, TopicCreateDto } from '@type/topic';
+import { GetMyTopicsDto, GetTopicDetailDto, GetTopicMessagesDto, TopicCreateDto } from '@type/topic';
 import axios from './axios';
 
 export class TopicRequest {
@@ -8,5 +8,13 @@ export class TopicRequest {
 
   static getMyTopics = async (params: GetMyTopicsDto) => {
     return await axios.get('/topic/my-topic', params);
+  };
+
+  static getTopicDetail = async (params: GetTopicDetailDto) => {
+    return await axios.get(`/topic/${params.topicId}`);
+  };
+
+  static getTopicMessages = async (params: GetTopicMessagesDto) => {
+    return await axios.get(`/topic/${params.topicId}/messages`, params.query);
   };
 }

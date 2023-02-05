@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import accountSlice from './slices/accountSlice';
 import authSlice from './slices/authSlice';
 import layoutSlice from './slices/layoutSlice';
+import socketSlice from './slices/socketSlice';
 import topicSlice from './slices/topicSlice';
 
 export const whitelist = [];
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
   authSlice,
   accountSlice,
   topicSlice,
+  socketSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

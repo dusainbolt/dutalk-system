@@ -30,6 +30,7 @@ interface Props {
   window?: () => Window;
   children: ReactNode;
   onSubmitCreateTopic: any;
+  contentAppBar?: any;
 }
 
 export const ChatLayout = (props: Props) => {
@@ -91,18 +92,7 @@ export const ChatLayout = (props: Props) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" sx={(styles as any).appBar(drawerWidth)}>
-        <Toolbar>
-          <Typography
-            variant="h2"
-            sx={{ ...DEFAULT_STYLE.ellipseText(1), width: '80%', color: 'black', fontSize: 30 }}
-            component="h2"
-            // variant="body2"
-            color="text.primary"
-          >
-            Responsive drawer Responsive drawer Responsive drawer Responsive drawer Responsive drawer Responsive drawer
-            Responsive drawer Responsive drawer Responsive drawer Responsive drawer Responsive drawer
-          </Typography>
-        </Toolbar>
+        <Toolbar>{props.contentAppBar}</Toolbar>
       </AppBar>
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -116,7 +106,7 @@ export const ChatLayout = (props: Props) => {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#F5F5F8' },
           }}
         >
           {drawer}
@@ -125,7 +115,7 @@ export const ChatLayout = (props: Props) => {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#F5F5F8' },
           }}
           open
         >

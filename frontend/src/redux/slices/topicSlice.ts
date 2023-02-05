@@ -5,6 +5,11 @@ import {
   AddTopicSuccessAction,
   GetMyTopicsStartAction,
   GetMyTopicsSuccessAction,
+  GetTopicDetailStartAction,
+  GetTopicDetailSuccessAction,
+  GetTopicMessagesStartAction,
+  GetTopicMessagesSuccessAction,
+  SocketTopicMessagesReceiveAction,
 } from '@redux/actions/topicAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
@@ -39,7 +44,7 @@ const topicSlice = createSlice({
       state.errorAddTopic = payload;
     },
 
-    // get topic dispatch
+    // get topics dispatch
     getMyTopicsStart: (state: TopicSlice, { payload }: GetMyTopicsStartAction) => {
       state.loadingGetTopics = true;
     },
@@ -51,6 +56,42 @@ const topicSlice = createSlice({
     getMyTopicsError: (state: TopicSlice, { payload }: ErrorAction) => {
       state.loadingGetTopics = false;
       state.errorGetTopics = payload;
+    },
+
+    // get topic detail dispatch
+    getTopicDetailStart: (state: TopicSlice, { payload }: GetTopicDetailStartAction) => {
+      state.loadingGetTopic = !!payload.topicId;
+    },
+    getTopicDetailSuccess: (state: TopicSlice, { payload }: GetTopicDetailSuccessAction) => {
+      state.loadingGetTopic = false;
+      state.errorGetTopic = undefined;
+      state.topic = payload;
+    },
+    getTopicDetailError: (state: TopicSlice, { payload }: ErrorAction) => {
+      state.loadingGetTopic = false;
+      state.errorGetTopic = payload;
+    },
+
+    // get topic messages dispatch
+    getTopicMessagesStart: (state: TopicSlice, { payload }: GetTopicMessagesStartAction) => {
+      state.loadingGetTopicMessages = !!payload.topicId;
+    },
+    getTopicMessagesSuccess: (state: TopicSlice, { payload }: GetTopicMessagesSuccessAction) => {
+      state.loadingGetTopicMessages = false;
+      state.errorGetTopicMessages = undefined;
+      state.topicMessages = payload;
+    },
+    getTopicMessagesError: (state: TopicSlice, { payload }: ErrorAction) => {
+      state.loadingGetTopicMessages = false;
+      state.errorGetTopicMessages = payload;
+    },
+
+    // receive emit socket message
+    socketTopicMessagesReceive: (state: TopicSlice, { payload }: SocketTopicMessagesReceiveAction) => {
+      // is same topic of topic messages
+      if (state.topicMessages?.length && state.topicMessages[0].topicId === payload.topicId) {
+        state.topicMessages?.push(payload);
+      }
     },
   },
   extraReducers(builder) {
@@ -65,7 +106,20 @@ const topicSlice = createSlice({
 
 export const getTopicSlice = (state: RootState): TopicSlice => state[sliceName];
 
-export const { addTopicStart, addTopicSuccess, addTopicError, getMyTopicsStart, getMyTopicsSuccess, getMyTopicsError } =
-  topicSlice.actions;
+export const {
+  addTopicStart,
+  addTopicSuccess,
+  addTopicError,
+  getMyTopicsStart,
+  getMyTopicsSuccess,
+  getMyTopicsError,
+  getTopicDetailStart,
+  getTopicDetailSuccess,
+  getTopicDetailError,
+  getTopicMessagesStart,
+  getTopicMessagesSuccess,
+  getTopicMessagesError,
+  socketTopicMessagesReceive,
+} = topicSlice.actions;
 
 export default persistReducer(getPersistConfig(sliceName, { whitelist: [''] }), topicSlice.reducer);

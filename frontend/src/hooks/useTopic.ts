@@ -1,10 +1,12 @@
-import { addTopicStart, getMyTopicsStart } from '@redux/slices/topicSlice';
+import { addTopicStart, getMyTopicsStart, getTopicDetailStart, getTopicMessagesStart } from '@redux/slices/topicSlice';
 import { useAppDispatch } from '@redux/store';
 import { InputTopic } from '@type/topic';
 
 export interface UseTopic {
   onSubmitAddTopic: (values: InputTopic) => void;
   getMyTopic: () => void;
+  getTopicDetail: (topicId: string) => void;
+  getTopicMessages: (topicId: string) => void;
 }
 
 function useTopic(): UseTopic {
@@ -18,7 +20,15 @@ function useTopic(): UseTopic {
     dispatch(getMyTopicsStart({ includeLastMessage: 'true' }));
   };
 
-  return { onSubmitAddTopic, getMyTopic };
+  const getTopicDetail = (topicId: string) => {
+    dispatch(getTopicDetailStart({ topicId }));
+  };
+
+  const getTopicMessages = (topicId: string) => {
+    dispatch(getTopicMessagesStart({ topicId, query: { sort: 'id.ASC', limit: 30 } }));
+  };
+
+  return { onSubmitAddTopic, getMyTopic, getTopicDetail, getTopicMessages };
 }
 
 export default useTopic;

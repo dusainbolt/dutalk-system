@@ -19,7 +19,6 @@ export const FieldRange: FC<FieldRangeType> = ({ label, className, sx, field }) 
   const [value, setValue] = useState<number[]>([20, 37]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    console.log('event: ', newValue, event);
     setValue(newValue as number[]);
   };
 
@@ -34,8 +33,6 @@ export const FieldRange: FC<FieldRangeType> = ({ label, className, sx, field }) 
       label: 100,
     },
   ];
-
-  console.log('CHANGE');
 
   return (
     <Box sx={{ width: 300, mt: 2, ...sx }} className={clsx(className)}>

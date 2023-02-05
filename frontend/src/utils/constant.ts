@@ -17,6 +17,7 @@ const Constant = {
     LIGHT: 'light' as any,
   },
   delayAPI: 500,
+  delaySocket: 300,
 };
 
 export default Constant;

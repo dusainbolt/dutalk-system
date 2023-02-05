@@ -31,7 +31,6 @@ export const styleChatLayout: Record<PropertyNames, SxProps<Theme>> = {
   boxMain: (drawerWidth): any =>
     ({
       flexGrow: 1,
-      background: '#f5e5eb',
       width: { sm: `calc(100% - ${drawerWidth}px)` },
       mt: '64px',
       maxHeight: 'calc(100vh - 64px)',

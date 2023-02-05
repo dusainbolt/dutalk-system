@@ -4,7 +4,7 @@ import { Restrict } from '@type/field';
 import Helper from '@utils/helper';
 import clsx from 'clsx';
 import { FieldInputProps, FieldMetaProps, useFormikContext } from 'formik';
-import { FC, FormEvent } from 'react';
+import { FC, FormEvent, KeyboardEventHandler } from 'react';
 import { FormLabel } from './FormLabel';
 
 export type ValidateBlock = {
@@ -22,10 +22,21 @@ export interface FieldTextType {
   meta?: FieldMetaProps<any>;
   fieldProps?: TextFieldProps;
   block?: ValidateBlock;
+  onPressSubmitEnter?: boolean;
+  showError?: boolean;
 }
 
-const FieldText: FC<FieldTextType> = ({ label, className, field, sx, block, fieldProps }) => {
-  const { touched, errors, setFieldValue } = useFormikContext();
+const FieldText: FC<FieldTextType> = ({
+  label,
+  showError,
+  className,
+  field,
+  onPressSubmitEnter,
+  sx,
+  block,
+  fieldProps,
+}) => {
+  const { touched, errors, setFieldValue, handleSubmit } = useFormikContext();
   const fieldTouch: boolean = Helper.objValue(touched, field?.name);
   const fieldError: string = Helper.objValue(errors, field?.name);
   const isError: boolean = fieldTouch && Boolean(fieldError);
@@ -53,6 +64,15 @@ const FieldText: FC<FieldTextType> = ({ label, className, field, sx, block, fiel
     setFieldValue(field?.name as string, isNumberInput ? Number(value) : value);
   };
 
+  const handleKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      if (onPressSubmitEnter) {
+        e.preventDefault();
+        handleSubmit();
+      }
+    }
+  };
+
   return (
     <Box sx={{ mt: 1, width: '100%', ...sx }} className={clsx(className)}>
       <FormLabel fieldName={field?.name} label={label} />
@@ -62,10 +82,11 @@ const FieldText: FC<FieldTextType> = ({ label, className, field, sx, block, fiel
         name={field?.name}
         value={field?.value}
         onChange={onChangeInput as any}
-        error={isError}
+        error={showError && isError}
         size="small"
-        helperText={fieldTouch && fieldError}
+        helperText={showError && fieldTouch && fieldError}
         variant="outlined"
+        onKeyPress={handleKeyPress as any}
         {...fieldProps}
       />
     </Box>

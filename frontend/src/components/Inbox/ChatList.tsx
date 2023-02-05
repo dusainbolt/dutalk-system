@@ -8,19 +8,25 @@ import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppSelector } from '@redux/store';
 import { DEFAULT_STYLE } from '@styles/theme';
 import Date from '@utils/date';
+import { useRouter } from 'next/dist/client/router';
 import * as React from 'react';
 
 export const ChatList = () => {
   const { listTopics, loadingGetTopics } = useAppSelector(getTopicSlice);
+  const route = useRouter();
 
   return loadingGetTopics ? (
     <LoadingCircular />
   ) : (
-    <List sx={{ p: 0, width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <List sx={{ p: 0, width: '100%', maxWidth: 360 }}>
       {listTopics?.map((item, index) => {
         return (
           <ListItem key={index} disablePadding>
-            <ListItemButton alignItems="flex-start" sx={{ p: 1, pt: 0.5, pb: 0.5, borderRadius: 2, width: '100%' }}>
+            <ListItemButton
+              onClick={() => route.push(`/hop-thu/${item.id}`)}
+              alignItems="flex-start"
+              sx={{ p: 1, pt: 0.5, pb: 0.5, borderRadius: 2, width: '100%' }}
+            >
               <ListItemText
                 primary={
                   <Typography sx={{ fontSize: 18, fontWeight: 700 }} noWrap>
@@ -40,16 +46,6 @@ export const ChatList = () => {
           </ListItem>
         );
       })}
-      {/* {listItem}
-      <Divider component="li" sx={{ mt: 0.75, mb: 0.75 }} />
-      {listItem}
-      <Divider component="li" sx={{ mt: 0.75, mb: 0.75 }} />
-      {listItem}
-      <Divider component="li" sx={{ mt: 0.75, mb: 0.75 }} />
-      {listItem}
-      <Divider component="li" sx={{ mt: 0.75, mb: 0.75 }} />
-      {listItem}
-      <Divider component="li" sx={{ mt: 0.75, mb: 0.75 }} /> */}
     </List>
   );
 };

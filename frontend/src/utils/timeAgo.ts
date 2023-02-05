@@ -56,7 +56,6 @@ export function timeAgo(dateParam) {
   const isToday = today.toDateString() === date.toDateString();
   const isYesterday = yesterday.toDateString() === date.toDateString();
   const isThisYear = today.getFullYear() === date.getFullYear();
-
   if (seconds < 5) {
     return 'now';
   } else if (seconds < 60) {

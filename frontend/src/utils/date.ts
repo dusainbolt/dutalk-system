@@ -1,8 +1,10 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import Constant from './constant';
 import { timeAgo } from './timeAgo';
 
 export default class Date {
+  static readonly oneHours = 60 * 60;
+
   static isDayjs = (value) => value instanceof dayjs;
 
   static renderDayjs = (value) => (Date.isDayjs(value) ? value : dayjs(value));
@@ -13,5 +15,9 @@ export default class Date {
 
   static generateDuration = (value: string) => {
     return timeAgo(value);
+  };
+
+  static diff = (smallDate: string, bigDate: string) => {
+    return Date.renderDayjs(bigDate).diff(Date.renderDayjs(smallDate));
   };
 }

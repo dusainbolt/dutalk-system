@@ -1,4 +1,4 @@
-import { AddTopicStartAction, GetMyTopicsStartAction } from '@redux/actions/topicAction';
+import { AddTopicStartAction, GetMyTopicsStartAction, GetTopicDetailStartAction } from '@redux/actions/topicAction';
 import {
   addTopicError,
   addTopicStart,
@@ -6,6 +6,12 @@ import {
   getMyTopicsError,
   getMyTopicsStart,
   getMyTopicsSuccess,
+  getTopicDetailError,
+  getTopicDetailStart,
+  getTopicDetailSuccess,
+  getTopicMessagesError,
+  getTopicMessagesStart,
+  getTopicMessagesSuccess,
 } from '@redux/slices/topicSlice';
 import { TopicRequest } from '@request/topicRequest';
 import Constant from '@utils/constant';
@@ -40,7 +46,37 @@ function* watchGetMyTopics({ payload }: GetMyTopicsStartAction) {
   }
 }
 
+function* watchGetTopicDetail({ payload }: GetTopicDetailStartAction) {
+  try {
+    const response = yield TopicRequest.getTopicDetail(payload);
+    yield delay(Constant.delayAPI);
+    if (Helper.isOkResponse(response)) {
+      yield put(getTopicDetailSuccess(response.data));
+    } else {
+      yield put(getTopicDetailError(response));
+    }
+  } catch (error: any) {
+    yield put(getTopicDetailError(null as any));
+  }
+}
+
+function* watchGetTopicMessages({ payload }: GetTopicDetailStartAction) {
+  try {
+    const response = yield TopicRequest.getTopicMessages(payload);
+    yield delay(Constant.delayAPI);
+    if (Helper.isOkResponse(response)) {
+      yield put(getTopicMessagesSuccess(response.data));
+    } else {
+      yield put(getTopicMessagesError(response));
+    }
+  } catch (error: any) {
+    yield put(getTopicMessagesError(null as any));
+  }
+}
+
 export default function* topicSaga(): any {
   yield takeLatest(addTopicStart, watchAddTopic);
   yield takeLatest(getMyTopicsStart, watchGetMyTopics);
+  yield takeLatest(getTopicDetailStart, watchGetTopicDetail);
+  yield takeLatest(getTopicMessagesStart, watchGetTopicMessages);
 }
