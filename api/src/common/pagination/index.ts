@@ -20,7 +20,6 @@ export const getDefaultQuery = <T>({
   ...options
 }: PaginateOptionsDto): IPaginationRequest<T> => {
   let sortDefault: any = { updatedOn: QuerySort.DESC };
-  // console.log('sortDefault: ', sortDefault);
   if (sort !== undefined && sort !== '') {
     const [sortBy, orderBy]: string[] = sort.split('.');
     sortDefault = { [sortBy]: orderBy };
@@ -28,7 +27,7 @@ export const getDefaultQuery = <T>({
   const formatFilter = (filter ? querystrings.parse(filter.slice(1, -1).replace(/,/g, '&')) : {}) as any;
   const limitResult = Number(limit ? limit : PAGINATION.SIZE_DEFAULT);
   const pageResult = Number(page ? page : PAGINATION.PAGE_DEFAULT);
-  const skip = (pageResult - 1) * limitResult - 1;
+  const skip = (pageResult - 1) * limitResult;
   return {
     order: sortDefault,
     page: pageResult,

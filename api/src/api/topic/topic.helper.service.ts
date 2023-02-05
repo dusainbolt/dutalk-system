@@ -1,19 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERROR_CODE } from 'src/common/interfaces';
-import { IPaginationRequest, PaginateOptionsDto } from 'src/common/pagination';
-import { Account } from 'src/entities/account.entity';
 import { Topic } from 'src/entities/topic.entity';
 import { AppException } from 'src/middleware';
-import {
-  DeepPartial,
-  FindOptionsWhere,
-  Repository,
-  Like,
-  FindOptionsOrder,
-  FindManyOptions,
-  FindOptionsRelations,
-} from 'typeorm';
+import { DeepPartial, FindOptionsOrder, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class TopicHelper {
@@ -47,5 +37,11 @@ export class TopicHelper {
   async checkCorrectTitle(userId, title) {
     const topic = await this.findTopic({ accountId: userId, title });
     if (!!topic) throw new AppException(ERROR_CODE.TOPIC_TITLE_EXIST_BY_ACCOUNT);
+  }
+
+  async checkOwnerTopic(userId, topicId): Promise<Topic> {
+    const topic = await this.findTopic({ id: topicId });
+    if (topic?.accountId !== userId) throw new AppException(ERROR_CODE.TOPIC_DO_NOT_PERMISSION);
+    return topic;
   }
 }

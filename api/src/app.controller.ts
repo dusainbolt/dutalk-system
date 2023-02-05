@@ -9,7 +9,7 @@ export class AppController {
   @Get('/')
   @ApiOperation({ summary: 'Check app is running' })
   getHello(@Query() query: { address: string }): any {
-    if (!query.address) throw new AppException(ERROR_CODE.ERROR_CODE_TEST);
+    if (!query.address) throw new AppException(ERROR_CODE.ERROR_EXCEPTION);
     return 'thing';
   }
 }

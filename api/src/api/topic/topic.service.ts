@@ -32,7 +32,12 @@ export class TopicService {
     return await this.topicHelper.updateTopic(topic.id, { latestMessageId: messages[1].id });
   }
 
-  async getTopicOfUser(account: Account, data: TopicGetByUserDto) {
+  async getTopicDetail(account: Account, topicId: number) {
+    const topicByOwner = await this.topicHelper.checkOwnerTopic(account.id, topicId);
+    return topicByOwner;
+  }
+
+  async getTopicsOfUser(account: Account, data: TopicGetByUserDto) {
     const { take, skip, order, ...options } = getDefaultQuery(data);
     return await this.topicHelper.findTopics(
       { accountId: account.id },
@@ -40,11 +45,18 @@ export class TopicService {
     );
   }
 
-  async getTopicOnSystem(data: TopicGetByAdmin) {
+  async getTopicsOnSystem(data: TopicGetByAdmin) {
     const { take, skip, order, ...options } = getDefaultQuery(data);
     return await this.topicHelper.findTopics(
       {},
       { take, skip, order, relations: { latestMessage: data.includeLastMessage === 'true' } },
     );
+  }
+
+  async getMessagesOfTopic(account: Account, topicId: number, data: TopicGetByUserDto) {
+    await this.topicHelper.checkOwnerTopic(account.id, topicId);
+    const { take, skip, order, ...options } = getDefaultQuery(data);
+    console.log('order: ', order);
+    return await this.messageHelper.findMessages({ topicId }, { take, skip, order });
   }
 }

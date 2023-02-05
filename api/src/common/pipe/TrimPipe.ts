@@ -22,10 +22,10 @@ export class TrimPipe implements PipeTransform {
   }
 
   transform(values: any, metadata: ArgumentMetadata) {
-    const { type } = metadata;
+    // const { type } = metadata;
     if (this.isObj(values)) {
       return this.trim(values);
     }
-    throw new BadRequestException('Validation failed');
+    return values;
   }
 }

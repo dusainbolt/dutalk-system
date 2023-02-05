@@ -1,4 +1,4 @@
-import { Body, Get, Post, Query, Req } from '@nestjs/common';
+import { Body, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { ENTITY_NAME } from 'src/common/constant';
 import { IsAuthController } from 'src/common/decorators';
@@ -19,10 +19,23 @@ export class TopicController {
     return await this.topicService.createTopic(req.user, body);
   }
 
-  @Post('/my-topic')
+  @Get('/my-topic')
   @ApiOperation({ summary: 'Get list topic of user' })
   async getMyTopic(@Req() req: RequestUser, @Query() query: TopicGetByUserDto) {
-    return await this.topicService.getTopicOfUser(req.user, query);
+    console.log('My topic: ', await this.topicService.getTopicsOfUser(req.user, query));
+    return await this.topicService.getTopicsOfUser(req.user, query);
+  }
+
+  @Get('/:id')
+  @ApiOperation({ summary: 'Get list messages of topic' })
+  async getTopicDetail(@Req() req: RequestUser, @Param('id') id: string) {
+    return await this.topicService.getTopicDetail(req.user, id as any);
+  }
+
+  @Get('/:id/messages')
+  @ApiOperation({ summary: 'Get list messages of topic' })
+  async getMessagesOfTopic(@Req() req: RequestUser, @Param('id') id: string, @Query() query: TopicGetByUserDto) {
+    return await this.topicService.getMessagesOfTopic(req.user, id as any, query);
   }
 }
 
@@ -34,6 +47,6 @@ export class TopicAdminController {
   @Get('/')
   @ApiOperation({ summary: 'Get list topics on system' })
   async getMyTopic(@Query() query: TopicGetByAdmin) {
-    return await this.topicService.getTopicOnSystem(query);
+    return await this.topicService.getTopicsOnSystem(query);
   }
 }

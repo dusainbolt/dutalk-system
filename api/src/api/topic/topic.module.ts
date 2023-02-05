@@ -10,5 +10,6 @@ import { TopicService } from './topic.service';
   imports: [TypeOrmModule.forFeature([Topic]), MessageModule],
   providers: [TopicService, TopicHelper],
   controllers: [TopicController, TopicAdminController],
+  exports: [TopicHelper],
 })
 export class TopicModule {}

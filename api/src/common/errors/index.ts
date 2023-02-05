@@ -3,7 +3,7 @@ import { AppError, ERROR_CODE } from '../interfaces/error.interface';
 
 export const ERROR: Record<ERROR_CODE, AppError> = {
   // COMMON
-  [ERROR_CODE.ERROR_CODE_TEST]: {
+  [ERROR_CODE.ERROR_EXCEPTION]: {
     code: '0000',
     message: 'Error test',
     status: HttpStatus.OK,
@@ -77,6 +77,11 @@ export const ERROR: Record<ERROR_CODE, AppError> = {
   [ERROR_CODE.TOPIC_TITLE_EXIST_BY_ACCOUNT]: {
     code: '2000',
     message: `Topic title is exist by account`,
+    status: HttpStatus.OK,
+  },
+  [ERROR_CODE.TOPIC_DO_NOT_PERMISSION]: {
+    code: '2000',
+    message: `User not permission to view message of topic`,
     status: HttpStatus.OK,
   },
 };

@@ -9,6 +9,7 @@ import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { TrimPipe } from './common/pipe/TrimPipe';
+import { AuthenticatedSocketIoAdapter } from './gatewaies/authenticated-socket.adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -26,6 +27,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }), new TrimPipe());
   app.useGlobalFilters(new AppExceptionFilter(logger, httpAdapter));
   app.useGlobalInterceptors(new LoggerErrorInterceptor(), new TransformInterceptor());
+  app.useWebSocketAdapter(new AuthenticatedSocketIoAdapter(app));
 
   logger.log(`Application running at ${process.env.NODE_ENV} mode`);
 

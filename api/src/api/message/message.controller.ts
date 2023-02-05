@@ -1,4 +1,6 @@
 import { Controller } from '@nestjs/common';
+import { ENTITY_NAME } from 'src/common/constant';
+import { IsAuthController } from 'src/common/decorators';
 
-@Controller('message')
+@IsAuthController(ENTITY_NAME.message, 'Message')
 export class MessageController {}

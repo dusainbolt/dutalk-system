@@ -23,6 +23,7 @@ export interface IConfigRedis {
   host: string;
   port: string;
   ttlOtp: number;
+  ttlSocketClient: number;
 }
 
 export interface IConfigMail {

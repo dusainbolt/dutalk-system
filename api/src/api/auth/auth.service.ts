@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ERROR_CODE } from 'src/common/interfaces';
 import { Security } from 'src/common/utils/security.utils';
-import { AppException } from 'src/middleware';
 import { AccountHelper } from '../account/account.helper.service';
 import { AccountStatus } from '../account/account.interface';
 import {

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERROR_CODE } from 'src/common/interfaces';
 import { Account } from 'src/entities/account.entity';

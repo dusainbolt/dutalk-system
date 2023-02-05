@@ -15,4 +15,6 @@ export type AccountJWT = {
   email: string;
   role: AccountRole;
   status: AccountStatus;
+  exp?: number;
+  iat?: number;
 };

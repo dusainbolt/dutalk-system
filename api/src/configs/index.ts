@@ -35,6 +35,7 @@ const config: IConfig = {
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
     ttlOtp: parseInt(process.env.REDIS_TTL_OTP),
+    ttlSocketClient: parseInt(process.env.REDIS_TTL_SOCKET_CLIENT),
   },
 };
 

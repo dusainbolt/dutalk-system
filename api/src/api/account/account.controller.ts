@@ -15,7 +15,6 @@ export class AccountController {
   @Get('/')
   @ApiOperation({ summary: 'Get account info' })
   async getAccountInfo(@Req() req: RequestUser) {
-    console.log('234132412: ', req.user);
     return { account: req.user };
   }
 }
