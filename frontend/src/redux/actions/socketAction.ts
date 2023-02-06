@@ -1,8 +1,9 @@
 import { PayloadName } from '@redux/reducer';
 import { sendMessageSuccess } from '@redux/slices/socketSlice';
 import { socketTopicMessagesReceive } from '@redux/slices/topicSlice';
+import { Account, AccountRole } from '@type/account';
 import { Message } from '@type/message';
-import { SocketSendMessageDto } from '@type/socket';
+import { SocketSendMessageDto, SocketTopicMessagesReceiveDto } from '@type/socket';
 import Constant from '@utils/constant';
 import Helper from '@utils/helper';
 import { toast } from 'react-toastify';
@@ -16,12 +17,16 @@ export class SocketActions {
   private _io: Socket;
 
   // id of user
-  private _userId: number;
+  private _account: Account;
+
+  // emit channel socket
+  private _emit: any;
 
   // passing argument in constructor
-  constructor(io: Socket, _userId: number) {
-    this._io = io;
-    this._userId = _userId;
+  constructor(_io: Socket, _emit: any, _account: Account) {
+    this._io = _io;
+    this._account = _account;
+    this._emit = _emit;
   }
 
   private isSuccess = (payload: any) => {
@@ -32,13 +37,19 @@ export class SocketActions {
     return true;
   };
 
-  public watchActions = async (emit) => {
-    this._io.on(`message_received_${this._userId}`, async (payload: Message) => {
-      if (this.isSuccess(payload)) {
-        await Helper.delay(Constant.delaySocket);
-        emit(sendMessageSuccess());
-        emit(socketTopicMessagesReceive(payload));
-      }
-    });
+  private handleMessageReceive = async (payload: SocketTopicMessagesReceiveDto) => {
+    if (this.isSuccess(payload)) {
+      await Helper.delay(Constant.delaySocket);
+      this._emit(sendMessageSuccess());
+      this._emit(socketTopicMessagesReceive(payload));
+    }
+  };
+
+  public watchActions = () => {
+    if (this._account.role === AccountRole.USER) {
+      this._io.on(`message_received_${this._account.id}`, this.handleMessageReceive);
+    } else if (this._account.role === AccountRole.ADMIN) {
+      this._io.on('message_received_admin', this.handleMessageReceive);
+    }
   };
 }

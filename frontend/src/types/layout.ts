@@ -7,6 +7,7 @@ export type AppDialog = {
   open?: boolean;
   title?: string;
   description?: string;
+  content?: any;
   callbackOk?: any;
   label?: string;
   require?: boolean;

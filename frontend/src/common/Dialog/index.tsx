@@ -1,3 +1,4 @@
+import { SlideTransition } from '@common/Transition/SlideTransition';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -36,12 +37,13 @@ export const AppDialog = () => {
     <Dialog
       fullScreen={fullScreen}
       open={dialog?.open || false}
+      TransitionComponent={SlideTransition}
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
     >
       <DialogTitle id="responsive-dialog-title">{dialog?.title || ''}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{dialog?.description || ''}</DialogContentText>
+        {dialog?.description && <DialogContentText>{dialog?.description}</DialogContentText>}
         {dialog?.label && (
           <TextField
             autoFocus
@@ -58,14 +60,17 @@ export const AppDialog = () => {
             variant="standard"
           />
         )}
+        {dialog?.content || ''}
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose}>
-          Disagree
+        <Button variant="outlined" autoFocus onClick={handleClose}>
+          Đóng
         </Button>
-        <Button onClick={handleOk} autoFocus>
-          Agree
-        </Button>
+        {dialog?.callbackOk && (
+          <Button onClick={handleOk} autoFocus>
+            Agree
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

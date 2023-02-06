@@ -3,7 +3,7 @@ import { Button } from '@common/Button';
 import { TopicForm } from '@components/Inbox/TopicForm';
 import useTopic from '@hooks/useTopic';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { Fade, Stack } from '@mui/material';
+import { Avatar, Chip, Fade, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -17,6 +17,9 @@ import { validateCreateTopic, valuesCreateTopic } from 'src/yup/validateTopic';
 import { ChatList } from '../../components/Inbox/ChatList';
 import { ChatMenu } from '../../components/Inbox/ChatMenu';
 import { chatLayoutStyles } from './styles/ChatLayout.style';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { getAccountSlice } from '@redux/slices/accountSlice';
+import { AccountRole } from '@type/account';
 
 const drawerWidth = 320;
 
@@ -36,7 +39,9 @@ export const ChatLayout = (props: Props) => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [isCreatingTopic, setIsCreatingTopic] = useState<boolean>(false);
   const { newTopicId } = useAppSelector(getTopicSlice);
-  const { getMyTopic } = useTopic();
+  const { account } = useAppSelector(getAccountSlice);
+
+  const { getMyTopics } = useTopic();
   const styles = chatLayoutStyles(drawerWidth)();
 
   const handleDrawerToggle = () => {
@@ -46,28 +51,38 @@ export const ChatLayout = (props: Props) => {
   useEffect(() => {
     if (newTopicId) {
       setIsCreatingTopic(false);
-      getMyTopic();
+      getMyTopics();
     }
   }, [newTopicId]);
+
+  const isAdmin = account?.role === AccountRole.ADMIN;
 
   const drawer = (
     <Box>
       <Toolbar className={styles.toolbar}>
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
           <ChatMenu />
-          <Button
-            variant="contained"
-            size="small"
-            disableElevation
-            onClick={() => setIsCreatingTopic((isCreatingTopic) => !isCreatingTopic)}
-            startIcon={<AddCircleRoundedIcon />}
-            className={styles.buttonAddTopic}
-          >
-            Tạo chủ đề
-          </Button>
+          {isAdmin ? (
+            <Chip label="Admin" color="success" variant="outlined" />
+          ) : (
+            <Chip avatar={<Avatar>{account?.fullName.split('')[0]}</Avatar>} label={account?.fullName} />
+          )}
         </Stack>
       </Toolbar>
-      <Divider />
+      <Box sx={{ position: 'absolute', p: 1, pt: 0, top: 64, height: 'max-content', width: '100%' }}>
+        <Button
+          variant="outlined"
+          size="small"
+          disabled={isAdmin}
+          disableElevation
+          onClick={() => setIsCreatingTopic((isCreatingTopic) => !isCreatingTopic)}
+          startIcon={isCreatingTopic ? <ArrowBackRoundedIcon /> : <AddCircleRoundedIcon />}
+          className={styles.buttonAddTopic}
+        >
+          {isCreatingTopic ? 'Trở lại' : 'Tạo chủ đề'}
+        </Button>
+      </Box>
+      {/* <Divider /> */}
       <Fade in={isCreatingTopic}>
         <Box className={styles.boxChatList}>
           <Formik
@@ -122,7 +137,6 @@ export const ChatLayout = (props: Props) => {
         </Drawer>
       </Box>
       <Box component="main" className={styles.boxMain}>
-        {/* eslint-disable-next-line react/destructuring-assignment */}
         {props.children}
       </Box>
     </Box>

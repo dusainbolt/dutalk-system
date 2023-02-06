@@ -4,24 +4,24 @@ import { CSSProperties, makeStyles } from '@mui/styles';
 export const chatLayoutStyles = (drawerWidth: number) =>
   makeStyles((theme: Theme) => ({
     toolbar: {
-      padding: '10px !important',
+      padding: theme.spacing(1),
       position: 'fixed',
       width: drawerWidth,
       height: 64,
     },
-    buttonAddTopic: { height: 34, borderRadius: theme.spacing(4) },
+    buttonAddTopic: { height: 34, borderRadius: theme.spacing(4), width: '100%' },
     boxChatList: {
       padding: theme.spacing(1),
       position: 'absolute',
-      top: 64,
-      maxHeight: 'calc(100% - 64px)',
+      top: 110,
+      maxHeight: 'calc(100% - 110px)',
       height: '100%',
       overflow: 'auto',
       width: '100%',
     },
     appBar: {
       background: 'white',
-      boxShadow: 'none',
+      boxShadow: '0 2px 2px rgba(114,114,114,0.168627)',
       [theme.breakpoints.up('sm')]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
@@ -29,7 +29,7 @@ export const chatLayoutStyles = (drawerWidth: number) =>
     },
     boxMain: {
       flexGrow: 1,
-      mt: '64px',
+      marginTop: '64px',
       maxHeight: 'calc(100vh - 64px)',
       overflow: 'hidden',
       position: 'relative',

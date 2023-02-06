@@ -1,6 +1,6 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
-import { Stack, TextFieldProps } from '@mui/material';
+import { Alert, Stack, TextFieldProps } from '@mui/material';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
@@ -17,6 +17,9 @@ export const TopicForm = ({ visible }) => {
 
   return (
     <Stack>
+      <Alert severity="info">
+        Hãy tạo chủ đề cho cuộc trò chuyện của bạn. Lưu ý mô tả nó để chúng ta cùng trao đổi nhé.
+      </Alert>
       <AlertErrorApp error={errorAddTopic} />
       <>
         <Field
@@ -31,8 +34,8 @@ export const TopicForm = ({ visible }) => {
           label="Mô tả"
           component={FieldText}
         />
-        <Button loading={loadingAddTopic} onClick={handleSubmit as any} variant="contained">
-          ĐĂNG KÝ
+        <Button sx={{ mt: 2 }} loading={loadingAddTopic} onClick={handleSubmit as any} variant="contained">
+          Hoàn tất
         </Button>
       </>
     </Stack>

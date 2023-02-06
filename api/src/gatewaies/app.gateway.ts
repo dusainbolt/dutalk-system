@@ -64,11 +64,15 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
       const newMessage = await this.messageHelper.insertMessage({
         content: data.message,
         accountId: userId,
-        // accountId: userId === 1 ? null : userId,
         topicId: data.topicId,
       });
       const topic = await this.topicHelper.updateLatestMessage(data.topicId, newMessage.id);
-      this.server.emit(`message_received_${userId}`, { message: newMessage, topic } as SocketTopicMessagesReceiveDto);
+      this.server.emit(`message_received_${topic.accountId}`, {
+        message: newMessage,
+        topic,
+      } as SocketTopicMessagesReceiveDto);
+      this.server.emit(`message_received_admin`, { message: newMessage, topic } as SocketTopicMessagesReceiveDto);
+
       console.log('Data: ', data);
     } catch (e) {
       this.logger.info(e, 'receiveMessagesFromClient ERROR:');

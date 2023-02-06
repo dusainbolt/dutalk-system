@@ -5,5 +5,7 @@ import { AccountHelper } from './account.helper.service';
 export class AccountService {
   constructor(private readonly accountHelper: AccountHelper) {}
 
-  async getAccountInfo() {}
+  async getAccountById(id: number) {
+    return await this.accountHelper.findAccount({ id });
+  }
 }

@@ -5,6 +5,8 @@ import {
   AddTopicSuccessAction,
   GetMyTopicsStartAction,
   GetMyTopicsSuccessAction,
+  GetSystemTopicsStartAction,
+  GetSystemTopicsSuccessAction,
   GetTopicDetailStartAction,
   GetTopicDetailSuccessAction,
   GetTopicMessagesStartAction,
@@ -52,10 +54,28 @@ const topicSlice = createSlice({
       state.loadingGetTopics = false;
       state.errorGetTopics = undefined;
       state.listTopics = payload;
+      state.loadedListTopic = true;
     },
     getMyTopicsError: (state: TopicSlice, { payload }: ErrorAction) => {
       state.loadingGetTopics = false;
       state.errorGetTopics = payload;
+      state.loadedListTopic = true;
+    },
+
+    // get topics on system dispatch
+    getSystemTopicsStart: (state: TopicSlice, { payload }: GetSystemTopicsStartAction) => {
+      state.loadingGetTopics = true;
+    },
+    getSystemTopicsSuccess: (state: TopicSlice, { payload }: GetSystemTopicsSuccessAction) => {
+      state.loadingGetTopics = false;
+      state.errorGetTopics = undefined;
+      state.listTopics = payload;
+      state.loadedListTopic = true;
+    },
+    getSystemTopicsError: (state: TopicSlice, { payload }: ErrorAction) => {
+      state.loadingGetTopics = false;
+      state.errorGetTopics = payload;
+      state.loadedListTopic = true;
     },
 
     // get topic detail dispatch
@@ -92,6 +112,13 @@ const topicSlice = createSlice({
       if (state.topicMessages?.length && state.topicMessages[0].topicId === payload.topic.id) {
         state.topicMessages?.push(payload.message);
       }
+      // update new data of topic
+      const indexTopic: any = state.listTopics?.findIndex((item) => item.id === payload.topic.id);
+      if (indexTopic !== -1) {
+        const oldTopic = (state as any)?.listTopics[indexTopic];
+        state.listTopics?.splice(indexTopic as number, 1);
+        state.listTopics?.unshift({ ...oldTopic, ...payload.topic, latestMessage: payload.message });
+      }
     },
   },
   extraReducers(builder) {
@@ -113,6 +140,9 @@ export const {
   getMyTopicsStart,
   getMyTopicsSuccess,
   getMyTopicsError,
+  getSystemTopicsStart,
+  getSystemTopicsSuccess,
+  getSystemTopicsError,
   getTopicDetailStart,
   getTopicDetailSuccess,
   getTopicDetailError,

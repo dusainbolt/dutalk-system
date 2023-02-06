@@ -2,7 +2,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { AccountHelper } from 'src/api/account/account.helper.service';
 import { AccountRole, AccountStatus } from 'src/api/account/account.interface';
-import { Account } from 'src/entities/account.entity';
+import { ADMIN_ID } from 'src/common/constant';
 
 @Injectable()
 export class SeedingService implements OnModuleInit {
@@ -21,6 +21,7 @@ export class SeedingService implements OnModuleInit {
       if (!existAdmin) {
         console.log('🚀 ~ file: seeding.service.ts ~ seedingAdmin');
         await this.accountHelper.insertAccount({
+          id: ADMIN_ID,
           email: 'dulh181199@gmail.com',
           username: 'dusainbolt',
           fullName: 'Lê Huy Du',

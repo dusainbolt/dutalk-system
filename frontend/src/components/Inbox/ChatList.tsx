@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppSelector } from '@redux/store';
 import { DEFAULT_STYLE } from '@styles/theme';
+import Constant from '@utils/constant';
 import Date from '@utils/date';
 import clsx from 'clsx';
 import { useRouter } from 'next/dist/client/router';
@@ -18,8 +19,6 @@ export const ChatList = () => {
   const { listTopics, loadingGetTopics } = useAppSelector(getTopicSlice);
   const styles = chatListStyles();
   const route = useRouter();
-
-  console.log('route: ', route.query.id);
 
   const isActive = (topicId) => topicId == route.query.id;
 
@@ -37,14 +36,15 @@ export const ChatList = () => {
             >
               <ListItemText
                 primary={
-                  <Typography sx={{ fontSize: 18, fontWeight: 700 }} noWrap>
+                  <Typography title={item.title} sx={{ fontSize: 18, fontWeight: 700 }} noWrap>
                     {item.title}
                   </Typography>
                 }
                 secondary={
                   <React.Fragment>
                     <Typography sx={DEFAULT_STYLE.ellipseText(2)} component="span" variant="body2" color="text.primary">
-                      <b>{!item?.latestMessage?.accountId ? 'Admin' : 'Bạn'}</b>: {item?.latestMessage?.content}
+                      <b>{item?.latestMessage?.accountId === Constant.ADMIN_ID ? 'Admin' : item.account?.fullName}</b>:{' '}
+                      {item?.latestMessage?.content}
                     </Typography>
                     <Box sx={{ fontSize: 14 }}>{Date.generateDuration(item.updatedOn)}</Box>
                   </React.Fragment>

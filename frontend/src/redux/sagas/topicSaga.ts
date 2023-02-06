@@ -1,4 +1,9 @@
-import { AddTopicStartAction, GetMyTopicsStartAction, GetTopicDetailStartAction } from '@redux/actions/topicAction';
+import {
+  AddTopicStartAction,
+  GetMyTopicsStartAction,
+  GetTopicDetailStartAction,
+  GetTopicMessagesStartAction,
+} from '@redux/actions/topicAction';
 import {
   addTopicError,
   addTopicStart,
@@ -6,6 +11,9 @@ import {
   getMyTopicsError,
   getMyTopicsStart,
   getMyTopicsSuccess,
+  getSystemTopicsError,
+  getSystemTopicsStart,
+  getSystemTopicsSuccess,
   getTopicDetailError,
   getTopicDetailStart,
   getTopicDetailSuccess,
@@ -37,6 +45,20 @@ function* watchGetMyTopics({ payload }: GetMyTopicsStartAction) {
     const response = yield TopicRequest.getMyTopics(payload);
     yield delay(Constant.delayAPI);
     if (Helper.isOkResponse(response)) {
+      yield put(getSystemTopicsSuccess(response.data));
+    } else {
+      yield put(getSystemTopicsError(response));
+    }
+  } catch (error: any) {
+    yield put(getSystemTopicsError(null as any));
+  }
+}
+
+function* watchGetSystemTopics({ payload }: GetMyTopicsStartAction) {
+  try {
+    const response = yield TopicRequest.getSystemTopics(payload);
+    yield delay(Constant.delayAPI);
+    if (Helper.isOkResponse(response)) {
       yield put(getMyTopicsSuccess(response.data));
     } else {
       yield put(getMyTopicsError(response));
@@ -48,7 +70,7 @@ function* watchGetMyTopics({ payload }: GetMyTopicsStartAction) {
 
 function* watchGetTopicDetail({ payload }: GetTopicDetailStartAction) {
   try {
-    const response = yield TopicRequest.getTopicDetail(payload);
+    const response = yield TopicRequest.getTopicDetail(payload.topicId, payload.query);
     yield delay(Constant.delayAPI);
     if (Helper.isOkResponse(response)) {
       yield put(getTopicDetailSuccess(response.data));
@@ -60,7 +82,7 @@ function* watchGetTopicDetail({ payload }: GetTopicDetailStartAction) {
   }
 }
 
-function* watchGetTopicMessages({ payload }: GetTopicDetailStartAction) {
+function* watchGetTopicMessages({ payload }: GetTopicMessagesStartAction) {
   try {
     const response = yield TopicRequest.getTopicMessages(payload);
     yield delay(Constant.delayAPI);
@@ -77,6 +99,7 @@ function* watchGetTopicMessages({ payload }: GetTopicDetailStartAction) {
 export default function* topicSaga(): any {
   yield takeLatest(addTopicStart, watchAddTopic);
   yield takeLatest(getMyTopicsStart, watchGetMyTopics);
+  yield takeLatest(getSystemTopicsStart, watchGetSystemTopics);
   yield takeLatest(getTopicDetailStart, watchGetTopicDetail);
   yield takeLatest(getTopicMessagesStart, watchGetTopicMessages);
 }

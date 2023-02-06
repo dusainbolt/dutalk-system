@@ -48,3 +48,5 @@ export const PATH_EXCLUDE = {
   ACTIVE: '/v1/auth/active-code',
   SIGN_OUT: '/v1/auth/sign-out',
 };
+
+export const ADMIN_ID = 1;

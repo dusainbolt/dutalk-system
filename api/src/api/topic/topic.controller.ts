@@ -5,7 +5,7 @@ import { IsAuthController } from 'src/common/decorators';
 import { RequestUser } from 'src/common/interfaces';
 import { AccountRole } from '../account/account.interface';
 import { Roles } from '../auth/roles.decorator';
-import { TopicCreateDto, TopicGetByAdmin, TopicGetByUserDto } from './topic.dto';
+import { TopicCreateDto, TopicGetByAdmin, TopicGetByUserDto, TopicGetDetailDto } from './topic.dto';
 import { TopicService } from './topic.service';
 
 @IsAuthController(ENTITY_NAME.topic, 'Topic')
@@ -28,8 +28,8 @@ export class TopicController {
 
   @Get('/:id')
   @ApiOperation({ summary: 'Get list messages of topic' })
-  async getTopicDetail(@Req() req: RequestUser, @Param('id') id: string) {
-    return await this.topicService.getTopicDetail(req.user, id as any);
+  async getTopicDetail(@Req() req: RequestUser, @Param('id') id: string, @Query() query: TopicGetDetailDto) {
+    return await this.topicService.getTopicDetail(req.user, id as any, query);
   }
 
   @Get('/:id/messages')

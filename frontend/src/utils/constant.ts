@@ -18,6 +18,7 @@ const Constant = {
   },
   delayAPI: 500,
   delaySocket: 300,
+  ADMIN_ID: 1,
 };
 
 export default Constant;

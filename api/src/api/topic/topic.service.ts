@@ -4,13 +4,18 @@ import { Account } from 'src/entities/account.entity';
 import { Message } from 'src/entities/message.entity';
 import { Topic } from 'src/entities/topic.entity';
 import { DeepPartial } from 'typeorm';
+import { AccountHelper } from '../account/account.helper.service';
 import { MessageHelper } from '../message/message.helper.service';
-import { TopicCreateDto, TopicGetByAdmin, TopicGetByUserDto } from './topic.dto';
+import { TopicCreateDto, TopicGetByAdmin, TopicGetByUserDto, TopicGetDetailDto } from './topic.dto';
 import { TopicHelper } from './topic.helper.service';
 
 @Injectable()
 export class TopicService {
-  constructor(private readonly topicHelper: TopicHelper, private readonly messageHelper: MessageHelper) {}
+  constructor(
+    private readonly topicHelper: TopicHelper,
+    private readonly messageHelper: MessageHelper,
+    private readonly accountHelper: AccountHelper,
+  ) {}
 
   async createTopic(account: Account, data: TopicCreateDto) {
     await this.topicHelper.checkCorrectTitle(account.id, data.title);
@@ -32,8 +37,11 @@ export class TopicService {
     return await this.topicHelper.updateTopic(topic.id, { latestMessageId: messages[1].id });
   }
 
-  async getTopicDetail(account: Account, topicId: number) {
+  async getTopicDetail(account: Account, topicId: number, query: TopicGetDetailDto) {
     const topicByOwner = await this.topicHelper.checkOwnerTopic(account.id, topicId);
+    if (query.account === 'true') {
+      topicByOwner.account = await this.accountHelper.findAccount({ id: topicByOwner.accountId });
+    }
     return topicByOwner;
   }
 
@@ -41,7 +49,12 @@ export class TopicService {
     const { take, skip, order, ...options } = getDefaultQuery(data);
     return await this.topicHelper.findTopics(
       { accountId: account.id },
-      { take, skip, order, relations: { latestMessage: data.includeLastMessage === 'true' } },
+      {
+        take,
+        skip,
+        order,
+        relations: { latestMessage: data.lastMessage === 'true', account: data.account === 'true' },
+      },
     );
   }
 
@@ -49,14 +62,18 @@ export class TopicService {
     const { take, skip, order, ...options } = getDefaultQuery(data);
     return await this.topicHelper.findTopics(
       {},
-      { take, skip, order, relations: { latestMessage: data.includeLastMessage === 'true' } },
+      {
+        take,
+        skip,
+        order,
+        relations: { latestMessage: data.lastMessage === 'true', account: data.account === 'true' },
+      },
     );
   }
 
   async getMessagesOfTopic(account: Account, topicId: number, data: TopicGetByUserDto) {
     await this.topicHelper.checkOwnerTopic(account.id, topicId);
     const { take, skip, order, ...options } = getDefaultQuery(data);
-    console.log('order: ', order);
     return await this.messageHelper.findMessages({ topicId }, { take, skip, order });
   }
 }

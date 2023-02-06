@@ -11,7 +11,15 @@ export class TopicCreateDto {
 
 export class TopicGetByUserDto extends PaginateOptionsDto {
   @IsSwaggerString({ default: 'false' }, false)
-  includeLastMessage: string;
+  lastMessage: string;
+
+  @IsSwaggerString({ default: 'false' }, false)
+  account: string;
+}
+
+export class TopicGetDetailDto {
+  @IsSwaggerString({ default: 'false' }, false)
+  account: string;
 }
 
 export class TopicGetByAdmin extends TopicGetByUserDto {}

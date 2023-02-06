@@ -1,3 +1,4 @@
+import { Account } from './account';
 import { AppError, IPaginationQuery } from './context';
 import { Message } from './message';
 
@@ -9,6 +10,7 @@ export type Topic = {
   createdOn: string;
   updatedOn: string;
   latestMessage?: Message;
+  account?: Account;
 };
 
 export type InputTopic = {
@@ -17,11 +19,17 @@ export type InputTopic = {
 };
 
 export interface GetMyTopicsDto extends IPaginationQuery {
-  includeLastMessage?: string;
+  lastMessage?: string;
+  account?: string;
+}
+
+export interface GetSystemTopicsDto extends IPaginationQuery {
+  lastMessage?: string;
+  account?: string;
 }
 
 export interface GetTopicDetailDto {
-  topicId?: string;
+  account?: string;
 }
 
 export interface GetTopicMessagesDto {
@@ -42,6 +50,7 @@ export type TopicSlice = {
   errorGetTopic?: AppError;
   errorGetTopics?: AppError;
   errorGetTopicMessages?: AppError;
+  loadedListTopic?: boolean;
   // data
   listTopics?: Topic[];
   topic?: Topic;

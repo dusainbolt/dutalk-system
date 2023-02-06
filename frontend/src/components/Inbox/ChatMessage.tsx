@@ -1,9 +1,9 @@
 import { Box, Chip, Divider } from '@mui/material';
+import { getAccountSlice } from '@redux/slices/accountSlice';
+import { useAppSelector } from '@redux/store';
 import { Message } from '@type/message';
 import Date from '@utils/date';
 import { FC } from 'react';
-
-const checkIsWriter = (message: Message): boolean => !!message?.accountId;
 
 export const checkShowTime = (messages: Message[], message: Message, index: number) => {
   const preMessage = messages[index - 1];
@@ -25,6 +25,10 @@ type IChatMessage = {
 };
 
 export const ChatMessage: FC<IChatMessage> = ({ message, isShowTime, index }) => {
+  const { account } = useAppSelector(getAccountSlice);
+
+  const checkIsWriter = (message: Message): boolean => account?.id === message?.accountId;
+
   const renderTimeContent = (
     <Box
       sx={{
@@ -35,7 +39,7 @@ export const ChatMessage: FC<IChatMessage> = ({ message, isShowTime, index }) =>
       }}
     >
       <Divider>
-        <Chip label={Date.generateDuration(message.createdOn)} />
+        <Chip sx={{ backgroundColor: 'rgb(0 0 0 / 3%)' }} label={Date.generateDuration(message.createdOn)} />
       </Divider>
     </Box>
   );

@@ -32,12 +32,12 @@ function* handleEmitSocket(socket: Socket) {
   yield fork(watchSendMessage, socket);
 }
 
-function createSocketChanel({ socket, userId }) {
+function createSocketChanel({ socket, account }) {
   // `eventChannel` takes a subscriber function
   // the subscriber function takes an `emit` argument to put messages onto the channel
   return eventChannel((emit) => {
-    const socketActions = new SocketActions(socket, userId);
-    socketActions.watchActions(emit);
+    const socketActions = new SocketActions(socket, emit, account);
+    socketActions.watchActions();
 
     const pingHandler = (event) => {
       // puts event payload into the channel
@@ -72,7 +72,7 @@ function* flowSocket() {
   // socket.emit => send socket to server
   yield fork(handleEmitSocket, socket);
   // socket.on => receive data
-  const socketChannel = yield call(createSocketChanel, { socket, userId: account?.id });
+  const socketChannel = yield call(createSocketChanel, { socket, account });
 
   while (true) {
     // get action by emitter and put receive action
