@@ -8,14 +8,14 @@ import { SharedModule } from './shared/shared.module';
 import { TopicModule } from './api/topic/topic.module';
 import { SeedingModule } from './seeding/seeding.module';
 import { MessageModule } from './api/message/message.module';
-import { GatewayModules } from './gatewaies/gateway.module';
+import { GatewayModule } from './gatewaies/gateway.module';
 
 @Module({
   imports: [
     // Service module
     SharedModule,
     SeedingModule,
-    GatewayModules,
+    GatewayModule,
     // Entity module
     TypeOrmModule.forFeature([Log]),
     AccountModule,

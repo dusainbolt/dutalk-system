@@ -23,6 +23,7 @@ import { Generate } from 'src/common/utils/generate.utils';
 import config from 'src/configs';
 import { Account } from 'src/entities/account.entity';
 import { SocketSendMessageDto, SocketTopicMessagesReceiveDto } from './interfaces/messages.interface';
+import { SocketService } from './socket.service';
 
 @WebSocketGateway(config.server.port + 1)
 // @WebSocketGateway(config.server.port + 1, { cors: true, transports: ['websocket', 'polling'] })
@@ -30,6 +31,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   @WebSocketServer() server: Server;
 
   constructor(
+    private socketService: SocketService,
     private readonly logger: PinoLogger,
     private readonly jwtService: JwtService,
     private readonly accountHelper: AccountHelper,
@@ -38,8 +40,10 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
+
   afterInit(server: any): any {
     this.logger.info(server, 'AppGateway Init: ');
+    this.socketService.socket = server;
   }
 
   async handleConnection(client: Socket) {

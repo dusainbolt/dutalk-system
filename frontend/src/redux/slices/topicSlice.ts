@@ -11,6 +11,7 @@ import {
   GetTopicDetailSuccessAction,
   GetTopicMessagesStartAction,
   GetTopicMessagesSuccessAction,
+  SocketNewTopicReceiveAction,
   SocketTopicMessagesReceiveAction,
 } from '@redux/actions/topicAction';
 import { getPersistConfig } from '@redux/storage';
@@ -120,6 +121,10 @@ const topicSlice = createSlice({
         state.listTopics?.unshift({ ...oldTopic, ...payload.topic, latestMessage: payload.message });
       }
     },
+
+    socketNewTopicReceive: (state: TopicSlice, { payload }: SocketNewTopicReceiveAction) => {
+      state.listTopics?.unshift(payload);
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -150,6 +155,7 @@ export const {
   getTopicMessagesSuccess,
   getTopicMessagesError,
   socketTopicMessagesReceive,
+  socketNewTopicReceive,
 } = topicSlice.actions;
 
 export default persistReducer(getPersistConfig(sliceName, { whitelist: [''] }), topicSlice.reducer);

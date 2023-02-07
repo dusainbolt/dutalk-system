@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { WebSocketServer } from '@nestjs/websockets';
+import { Server } from 'socket.io';
+import { ADMIN_ID } from 'src/common/constant';
 import { getDefaultQuery } from 'src/common/pagination';
 import { Account } from 'src/entities/account.entity';
 import { Message } from 'src/entities/message.entity';
 import { Topic } from 'src/entities/topic.entity';
+import { AppGateway } from 'src/gatewaies/app.gateway';
+import { SocketService } from 'src/gatewaies/socket.service';
 import { DeepPartial } from 'typeorm';
 import { AccountHelper } from '../account/account.helper.service';
 import { MessageHelper } from '../message/message.helper.service';
@@ -13,8 +18,9 @@ import { TopicHelper } from './topic.helper.service';
 export class TopicService {
   constructor(
     private readonly topicHelper: TopicHelper,
+    private socketService: SocketService,
     private readonly messageHelper: MessageHelper,
-    private readonly accountHelper: AccountHelper,
+    private readonly accountHelper: AccountHelper, // private readonly appGateWay: AppGateway,
   ) {}
 
   async createTopic(account: Account, data: TopicCreateDto) {
@@ -32,9 +38,17 @@ export class TopicService {
     const adminReplyMessage: DeepPartial<Message> = {
       content: `Chào ${account.fullName}, hệ thống đã nhận được tin nhắn của bạn. Quản trị viên sẽ trả lời bạn sớm!`,
       topicId: topic.id,
+      accountId: ADMIN_ID,
     };
     const messages = await this.messageHelper.insertMany([firstMessage, adminReplyMessage]);
-    return await this.topicHelper.updateTopic(topic.id, { latestMessageId: messages[1].id });
+    const topicUpdate = await this.topicHelper.updateTopic(topic.id, { latestMessageId: messages[1].id });
+    this.socketService.socket.emit('topic_received_admin', {
+      ...topicUpdate,
+      account: account,
+      latestMessage: messages[1],
+    } as Topic);
+
+    return topicUpdate;
   }
 
   async getTopicDetail(account: Account, topicId: number, query: TopicGetDetailDto) {

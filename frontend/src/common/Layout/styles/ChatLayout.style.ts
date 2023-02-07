@@ -8,6 +8,9 @@ export const chatLayoutStyles = (drawerWidth: number) =>
       position: 'fixed',
       width: drawerWidth,
       height: 64,
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      } as CSSProperties,
     },
     buttonAddTopic: { height: 34, borderRadius: theme.spacing(4), width: '100%' },
     boxChatList: {

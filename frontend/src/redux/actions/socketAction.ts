@@ -1,6 +1,6 @@
 import { PayloadName } from '@redux/reducer';
 import { sendMessageSuccess } from '@redux/slices/socketSlice';
-import { socketTopicMessagesReceive } from '@redux/slices/topicSlice';
+import { socketNewTopicReceive, socketTopicMessagesReceive } from '@redux/slices/topicSlice';
 import { Account, AccountRole } from '@type/account';
 import { Message } from '@type/message';
 import { SocketSendMessageDto, SocketTopicMessagesReceiveDto } from '@type/socket';
@@ -39,17 +39,29 @@ export class SocketActions {
 
   private handleMessageReceive = async (payload: SocketTopicMessagesReceiveDto) => {
     if (this.isSuccess(payload)) {
-      await Helper.delay(Constant.delaySocket);
+      // await Helper.delay(Constant.delaySocket);
       this._emit(sendMessageSuccess());
       this._emit(socketTopicMessagesReceive(payload));
     }
   };
 
+  private handleTopicReceive = async (payload) => {
+    if (this.isSuccess(payload)) {
+      this._emit(socketNewTopicReceive(payload));
+    }
+  };
+
   public watchActions = () => {
-    if (this._account.role === AccountRole.USER) {
-      this._io.on(`message_received_${this._account.id}`, this.handleMessageReceive);
-    } else if (this._account.role === AccountRole.ADMIN) {
-      this._io.on('message_received_admin', this.handleMessageReceive);
+    switch (this._account.role) {
+      case AccountRole.USER:
+        this._io.on(`message_received_${this._account.id}`, this.handleMessageReceive);
+        break;
+      case AccountRole.ADMIN:
+        this._io.on('message_received_admin', this.handleMessageReceive);
+        this._io.on('topic_received_admin', this.handleTopicReceive);
+        break;
+      default:
+        break;
     }
   };
 }

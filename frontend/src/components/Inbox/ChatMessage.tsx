@@ -8,9 +8,7 @@ import { FC } from 'react';
 export const checkShowTime = (messages: Message[], message: Message, index: number) => {
   const preMessage = messages[index - 1];
   const diffSecond = Math.floor(Date.diff(preMessage?.createdOn, message.createdOn) / 1000);
-  if (index === messages.length - 1) {
-    return false;
-  }
+
   if (diffSecond < Date.oneHours) {
     return false;
   }

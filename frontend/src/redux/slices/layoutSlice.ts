@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { OpenDialogAction } from '@redux/actions/layoutAction';
+import { OpenDialogAction, ShowChatListAction } from '@redux/actions/layoutAction';
 import { RootState } from '@redux/reducer';
 import { getPersistConfig } from '@redux/storage';
 import { AppState } from '@redux/store';
@@ -26,6 +26,9 @@ const layoutSlice = createSlice({
     closeDialogApp: (state: LayoutSlice) => {
       state.dialog = {};
     },
+    showChatListMobile: (state: LayoutSlice, { payload }: ShowChatListAction) => {
+      state.isShowChatListMobile = payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -39,6 +42,6 @@ const layoutSlice = createSlice({
 
 export const getLayoutSlice = (state: RootState): LayoutSlice => state[sliceName];
 
-export const { openDialogApp, closeDialogApp } = layoutSlice.actions;
+export const { openDialogApp, closeDialogApp, showChatListMobile } = layoutSlice.actions;
 
 export default persistReducer(getPersistConfig(sliceName, { whitelist: ['themeMode'] }), layoutSlice.reducer);

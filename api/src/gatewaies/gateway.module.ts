@@ -1,11 +1,13 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AccountModule } from 'src/api/account/account.module';
 import { MessageModule } from 'src/api/message/message.module';
 import { TopicModule } from 'src/api/topic/topic.module';
 import { AppGateway } from './app.gateway';
+import { SocketService } from './socket.service';
 
+@Global()
 @Module({
   imports: [
     AccountModule,
@@ -23,7 +25,7 @@ import { AppGateway } from './app.gateway';
       inject: [ConfigService],
     }),
   ],
-  providers: [AppGateway],
-  controllers: [],
+  providers: [AppGateway, SocketService],
+  exports: [SocketService],
 })
-export class GatewayModules {}
+export class GatewayModule {}

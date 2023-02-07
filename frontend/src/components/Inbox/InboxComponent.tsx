@@ -19,7 +19,7 @@ export const InboxComponent: FC<any> = () => {
   }, [account?.role, loadedListTopic]);
 
   return (
-    <ChatLayout onSubmitCreateTopic={onSubmitAddTopic}>
+    <ChatLayout isShowChatList onSubmitCreateTopic={onSubmitAddTopic}>
       <Stack direction="column" sx={{ height: '100%' }}></Stack>
     </ChatLayout>
   );

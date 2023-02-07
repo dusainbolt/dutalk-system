@@ -3,6 +3,7 @@ import { SocketActions } from '@redux/actions/socketAction';
 import { getAccountSlice, getAccountSuccess } from '@redux/slices/accountSlice';
 import { getAuthSlice, logoutSuccess } from '@redux/slices/authSlice';
 import { initSocketStart, sendMessageStart } from '@redux/slices/socketSlice';
+import { addTopicSuccess } from '@redux/slices/topicSlice';
 import { AccountSlice } from '@type/account';
 import { AuthSlice } from '@type/auth';
 import { eventChannel } from 'redux-saga';

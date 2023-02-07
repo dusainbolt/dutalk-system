@@ -22,7 +22,6 @@ export class TopicController {
   @Get('/my-topic')
   @ApiOperation({ summary: 'Get list topic of user' })
   async getMyTopic(@Req() req: RequestUser, @Query() query: TopicGetByUserDto) {
-    console.log('My topic: ', await this.topicService.getTopicsOfUser(req.user, query));
     return await this.topicService.getTopicsOfUser(req.user, query);
   }
 

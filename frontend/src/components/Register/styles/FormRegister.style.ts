@@ -9,5 +9,5 @@ export const formRegisterStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(1),
     ...DEFAULT_STYLE.btnStyle('#383E93'),
   },
-  btnLoginNow: { width: '45%', margin: '10px auto' },
+  btnLoginNow: { width: 'max-content', margin: '10px auto' },
 }));

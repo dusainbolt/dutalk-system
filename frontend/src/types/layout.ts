@@ -15,4 +15,5 @@ export type AppDialog = {
 
 export type LayoutSlice = {
   dialog?: AppDialog;
+  isShowChatListMobile?: boolean;
 };

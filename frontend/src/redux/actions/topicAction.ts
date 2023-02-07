@@ -21,3 +21,4 @@ export type GetTopicDetailSuccessAction = Record<PayloadName, Topic>;
 export type GetTopicMessagesStartAction = Record<PayloadName, GetTopicMessagesDto>;
 export type GetTopicMessagesSuccessAction = Record<PayloadName, Message[]>;
 export type SocketTopicMessagesReceiveAction = Record<PayloadName, SocketTopicMessagesReceiveDto>;
+export type SocketNewTopicReceiveAction = Record<PayloadName, Topic>;

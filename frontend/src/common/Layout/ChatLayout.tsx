@@ -3,23 +3,23 @@ import { Button } from '@common/Button';
 import { TopicForm } from '@components/Inbox/TopicForm';
 import useTopic from '@hooks/useTopic';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { Avatar, Chip, Fade, Stack } from '@mui/material';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { Avatar, Chip, Fade, Hidden, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
+import { getAccountSlice } from '@redux/slices/accountSlice';
+import { getLayoutSlice } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppSelector } from '@redux/store';
+import { AccountRole } from '@type/account';
 import { Formik } from 'formik';
 import { ReactNode, useEffect, useState } from 'react';
 import { validateCreateTopic, valuesCreateTopic } from 'src/yup/validateTopic';
 import { ChatList } from '../../components/Inbox/ChatList';
 import { ChatMenu } from '../../components/Inbox/ChatMenu';
 import { chatLayoutStyles } from './styles/ChatLayout.style';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import { getAccountSlice } from '@redux/slices/accountSlice';
-import { AccountRole } from '@type/account';
 
 const drawerWidth = 320;
 
@@ -32,15 +32,16 @@ interface Props {
   children: ReactNode;
   onSubmitCreateTopic: any;
   contentAppBar?: any;
+  isShowChatList?: boolean;
 }
 
 export const ChatLayout = (props: Props) => {
-  const { window } = props;
+  const { window, isShowChatList } = props;
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [isCreatingTopic, setIsCreatingTopic] = useState<boolean>(false);
   const { newTopicId } = useAppSelector(getTopicSlice);
   const { account } = useAppSelector(getAccountSlice);
-
+  const { isShowChatListMobile } = useAppSelector(getLayoutSlice);
   const { getMyTopics } = useTopic();
   const styles = chatLayoutStyles(drawerWidth)();
 
@@ -110,31 +111,35 @@ export const ChatLayout = (props: Props) => {
       </AppBar>
       <Box component="nav" className={styles.navDrawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#F5F5F8' },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#F5F5F8' },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
+        <Hidden smUp>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={typeof isShowChatListMobile !== 'undefined' ? isShowChatListMobile : isShowChatList}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%', background: '#F5F5F8' },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden smDown>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: 'block',
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: '#F5F5F8' },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
       </Box>
       <Box component="main" className={styles.boxMain}>
         {props.children}
