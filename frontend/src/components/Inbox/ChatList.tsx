@@ -1,10 +1,11 @@
 /* eslint-disable eqeqeq */
 import LoadingCircular from '@common/Progress/LoadingCircular';
-import { Box, ListItemButton, useMediaQuery, useTheme } from '@mui/material';
+import { Chip, ListItemButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import { getAccountSlice } from '@redux/slices/accountSlice';
 import { showChatListMobile } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
@@ -23,6 +24,7 @@ export const ChatList = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useAppDispatch();
+  const { account } = useAppSelector(getAccountSlice);
 
   const isActive = (topicId) => topicId == route.query.id;
 
@@ -45,17 +47,27 @@ export const ChatList = () => {
             >
               <ListItemText
                 primary={
-                  <Typography title={item.title} sx={{ fontSize: 18, fontWeight: 700 }} noWrap>
+                  <Typography title={item.title} style={{ fontSize: 18, fontWeight: 700 }} noWrap>
                     {item.title}
                   </Typography>
                 }
                 secondary={
                   <React.Fragment>
-                    <Typography sx={DEFAULT_STYLE.ellipseText(2)} component="span" variant="body2" color="text.primary">
+                    <Typography
+                      style={DEFAULT_STYLE.ellipseText(2)}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
                       <b>{item?.latestMessage?.accountId === Constant.ADMIN_ID ? 'Admin' : item.account?.fullName}</b>:{' '}
                       {item?.latestMessage?.content}
                     </Typography>
-                    <Box sx={{ fontSize: 14 }}>{Date.generateDuration(item.updatedOn)}</Box>
+                    <Stack direction="row" spacing={1}>
+                      <Typography style={{ fontSize: 12 }}>{Date.generateDuration(item.updatedOn)}</Typography>
+                      {item.latestMessage?.accountId !== account?.id && (
+                        <Chip className={styles.chipNotReply} color="error" label="Chưa trả lời" />
+                      )}
+                    </Stack>
                   </React.Fragment>
                 }
               />

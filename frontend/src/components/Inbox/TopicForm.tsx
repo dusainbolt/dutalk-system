@@ -34,7 +34,7 @@ export const TopicForm = ({ visible }) => {
           label="Mô tả"
           component={FieldText}
         />
-        <Button sx={{ mt: 2 }} loading={loadingAddTopic} onClick={handleSubmit as any} variant="contained">
+        <Button style={{ marginTop: 16 }} loading={loadingAddTopic} onClick={handleSubmit as any} variant="contained">
           Hoàn tất
         </Button>
       </>

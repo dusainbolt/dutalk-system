@@ -77,7 +77,7 @@ export const ChatMenu = () => {
         // variant="contained"
         // disableElevation
         onClick={handleClick}
-        icon={<MenuIcon sx={{ fontSize: 38 }} />}
+        icon={<MenuIcon style={{ fontSize: 38 }} />}
       ></ButtonIcon>
       <StyledMenu
         id="demo-customized-menu"

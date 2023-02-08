@@ -4,6 +4,12 @@ import { DEFAULT_STYLE } from '@styles/theme';
 
 export const formLoginStyles = makeStyles((theme: Theme) => ({
   linkForgotPass: { textAlign: 'center', display: 'block', marginTop: theme.spacing(3), color: '#383E93' },
-  btnLogin: { width: '100%', marginTop: theme.spacing(3), marginBottom: theme.spacing(1), ...DEFAULT_STYLE.btnStyle() },
-  btnRegister: { width: 'max-content', margin: '10px auto' },
+  btnLogin: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    ...DEFAULT_STYLE.btnStyle(),
+    borderRadius: theme.spacing(3),
+  },
+  btnRegister: { width: 'max-content', margin: '10px auto', borderRadius: theme.spacing(3) },
 }));

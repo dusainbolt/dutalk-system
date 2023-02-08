@@ -50,13 +50,13 @@ export const FormRegister = () => {
         >
           ĐĂNG KÝ
         </Button>
-        <Box sx={{ mt: 3, mb: 3 }}>
+        <Box style={{ marginTop: 24, marginBottom: 24 }}>
           Bằng cách đăng ký DuTalk, bạn đồng ý với{' '}
-          <Link sx={{ textDecoration: 'underline' }} href="/dieu-khoan">
+          <Link style={{ textDecoration: 'underline' }} href="/dieu-khoan">
             Điều khoản dịch vụ
           </Link>{' '}
           và{' '}
-          <Link sx={{ textDecoration: 'underline' }} href="/chinh-sach">
+          <Link style={{ textDecoration: 'underline' }} href="/chinh-sach">
             Chính sách quyền riêng tư
           </Link>{' '}
           của DuTalk.

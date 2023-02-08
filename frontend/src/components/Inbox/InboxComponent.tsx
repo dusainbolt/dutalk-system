@@ -20,7 +20,7 @@ export const InboxComponent: FC<any> = () => {
 
   return (
     <ChatLayout isShowChatList onSubmitCreateTopic={onSubmitAddTopic}>
-      <Stack direction="column" sx={{ height: '100%' }}></Stack>
+      <Stack direction="column" style={{ height: '100%' }}></Stack>
     </ChatLayout>
   );
 };

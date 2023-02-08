@@ -1,6 +1,5 @@
 import { Theme } from '@mui/material';
 import { CSSProperties, makeStyles } from '@mui/styles';
-import { DEFAULT_STYLE } from '@styles/theme';
 
 export const chatListStyles = makeStyles((theme: Theme) => ({
   listWrap: {
@@ -18,5 +17,12 @@ export const chatListStyles = makeStyles((theme: Theme) => ({
     '&.active': {
       background: 'white',
     } as CSSProperties,
+  },
+  chipNotReply: {
+    height: 20,
+    fontSize: 12,
+    '& .MuiChip-label': {
+      padding: theme.spacing(1),
+    },
   },
 }));

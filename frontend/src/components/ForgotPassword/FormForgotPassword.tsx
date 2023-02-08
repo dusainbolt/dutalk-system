@@ -35,7 +35,7 @@ export const FormForgotPassword = () => {
             Trang chủ
           </a>
         </Typography>
-        <Divider sx={{ mt: 3 }} />
+        <Divider style={{ marginTop: 24 }} />
         <Button href="/dang-nhap" className={styles.btnLogin} variant="contained">
           Đăng nhập
         </Button>

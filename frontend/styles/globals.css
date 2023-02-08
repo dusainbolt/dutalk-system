@@ -19,3 +19,8 @@ a {
 .MuiFormLabel-asterisk {
   color: red;
 }
+
+button.MuiButton-root {
+  text-transform: none;
+  font-weight: 500;
+}

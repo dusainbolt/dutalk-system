@@ -3,22 +3,22 @@ import { AppDialog } from '@common/Dialog';
 import { ChatLayout } from '@common/Layout/ChatLayout';
 import useMessage from '@hooks/useMessage';
 import useTopic from '@hooks/useTopic';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import InfoIcon from '@mui/icons-material/Info';
-import { Box, Container, Divider, Hidden, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
+import { Alert, Box, Container, Hidden, Stack, Typography } from '@mui/material';
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { openDialogApp, showChatListMobile } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
-import { DEFAULT_STYLE } from '@styles/theme';
 import { AccountRole } from '@type/account';
-import Date from '@utils/date';
 import { Formik } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import { FC, useEffect, useState } from 'react';
 import { validateSendMessage, valuesSendMessage } from 'src/yup/validateMessage';
 import { ChatForm } from './ChatForm';
 import { ChatMessage, checkShowTime } from './ChatMessage';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ChatTopicInfo } from './ChatTopicInfo';
+import { inboxChatStyles } from './styles/InboxChatStyle';
 
 export const InboxChatComponent: FC<any> = () => {
   const { onSubmitAddTopic, getSystemTopics, getMyTopics, getTopicDetail, getTopicMessages } = useTopic();
@@ -29,6 +29,7 @@ export const InboxChatComponent: FC<any> = () => {
   const route = useRouter();
   const [refBoxChat, setRefBoxChat] = useState<HTMLDivElement>(undefined as any);
   const { onSubmitSendMessage } = useMessage();
+  const styles = inboxChatStyles();
 
   // effect auto scroll box chat
   useEffect(() => {
@@ -59,43 +60,7 @@ export const InboxChatComponent: FC<any> = () => {
     dispatch(
       openDialogApp({
         title: 'Thông tin chủ đề',
-        content: (
-          <Box>
-            <Divider textAlign="left">Chủ đề</Divider>
-            <List
-              sx={{
-                width: '100%',
-                maxWidth: 360,
-                bgcolor: 'background.paper',
-              }}
-            >
-              <ListItem>
-                <ListItemText primary="Tiêu đề" secondary={topic?.title} />
-              </ListItem>
-            </List>
-            <Divider textAlign="left">Người dùng</Divider>
-            <List
-              sx={{
-                width: '100%',
-                maxWidth: 360,
-                bgcolor: 'background.paper',
-              }}
-            >
-              <ListItem>
-                <ListItemText primary="Nickname" secondary={topic?.account?.username} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Email" secondary={topic?.account?.email} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Họ và tên" secondary={topic?.account?.fullName} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Ngày tạo" secondary={Date.toDateHoursStr(topic?.account?.createdOn)} />
-              </ListItem>
-            </List>
-          </Box>
-        ),
+        content: <ChatTopicInfo />,
       })
     );
   };
@@ -106,14 +71,14 @@ export const InboxChatComponent: FC<any> = () => {
     <ChatLayout
       contentAppBar={
         !isLoadingPage && (
-          <Stack direction="row" justifyContent="space-between" sx={{ width: '100%' }}>
-            <Stack direction="row" sx={{ width: '100%' }}>
+          <Stack direction="row" justifyContent="space-between" style={{ width: '100%' }}>
+            <Stack direction="row" style={{ width: '100%' }}>
               <Hidden smUp>
                 <ButtonIcon onClick={backToChatList} icon={<ArrowBackIcon />} />
               </Hidden>
               <Typography
                 variant="h2"
-                sx={{ ...DEFAULT_STYLE.ellipseText(1), width: '80%', color: 'black', fontSize: 30 }}
+                className={styles.appBarTitle}
                 component="h2"
                 title={topic?.title}
                 color="text.primary"
@@ -128,13 +93,10 @@ export const InboxChatComponent: FC<any> = () => {
       onSubmitCreateTopic={onSubmitAddTopic}
     >
       {!isLoadingPage && (
-        <Stack direction="column" sx={{ height: '100%' }}>
-          <Box
-            ref={(node) => node && setRefBoxChat(node as any)}
-            sx={{ overflow: 'auto', minHeight: 'calc(100vh - 128px)' }}
-          >
+        <Stack direction="column" style={{ height: '100%' }}>
+          <Box className={styles.boxChatWrap} ref={(node) => node && setRefBoxChat(node as any)}>
             <Container maxWidth="md">
-              <Box sx={{ mt: 2, pb: 3 }}>
+              <Box className={styles.messagesWrap}>
                 {topicMessages?.map((message, index) => (
                   <ChatMessage
                     message={message}
@@ -143,11 +105,18 @@ export const InboxChatComponent: FC<any> = () => {
                     key={index}
                   />
                 ))}
-                <Box sx={{ height: 10, width: '100%', float: 'right' }}></Box>
+                {topicMessages?.length === 1 && account?.role !== AccountRole.ADMIN && (
+                  <Box style={{ marginTop: 8 }}>
+                    <Alert
+                      style={{ width: '100%' }}
+                    >{`Chào ${account?.fullName}, hệ thống đã nhận được tin nhắn của bạn. Quản trị viên sẽ trả lời bạn sớm!`}</Alert>
+                  </Box>
+                )}
+                <Box style={{ height: 10, width: '100%', float: 'right' }}></Box>
               </Box>
             </Container>
           </Box>
-          <Box sx={{ width: '100%', mb: 2 }}>
+          <Box style={{ width: '100%', marginBottom: 16 }}>
             <Container maxWidth="md">
               <Formik
                 onSubmit={onSubmitSendMessage}

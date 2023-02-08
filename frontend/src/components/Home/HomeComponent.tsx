@@ -7,7 +7,7 @@ const HomeComponent: FC<any> = () => {
     <Fragment>
       <DrawerAppBar />
       <main>
-        <Container sx={{ mt: 10 }} maxWidth="lg">
+        <Container style={{ marginTop: 80 }} maxWidth="lg">
           <Link
             style={{ textDecoration: 'underline', display: 'block', textAlign: 'center', width: '100%' }}
             href="/dang-nhap"

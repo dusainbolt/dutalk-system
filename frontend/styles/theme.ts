@@ -10,7 +10,7 @@ type DefaultStyle = {
 };
 
 export const DEFAULT_STYLE: DefaultStyle = {
-  primaryColor: '#383E93',
+  primaryColor: '#556EE5',
   ellipseText: (row: number) => ({
     display: '-webkit-box',
     textOverflow: 'ellipsis',
@@ -85,7 +85,7 @@ export const getThemeConfig = (mode: PaletteMode) => ({
     },
   },
   typography: {
-    fontFamily: 'Montserrat',
+    fontFamily: `system-ui`,
   },
   components: {
     MuiTypography: {

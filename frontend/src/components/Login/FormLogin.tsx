@@ -36,7 +36,7 @@ export const FormLogin = () => {
             Quên mật khẩu
           </a>
         </Typography>
-        <Divider sx={{ mt: 3 }} />
+        <Divider style={{ marginTop: 24 }} />
         <Button href="/dang-ky" className={styles.btnRegister} variant="contained">
           Tạo tài khoản mới
         </Button>

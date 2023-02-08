@@ -86,7 +86,7 @@ const ForgotPasswordComponent: FC<any> = () => {
           </Typography>
         </Stack>
         <Hidden mdDown>
-          <Stack alignItems="center" sx={{ width: '45%' }} justifyContent="center"></Stack>
+          <Stack alignItems="center" style={{ width: '45%' }} justifyContent="center"></Stack>
         </Hidden>
         <Stack alignItems="center" className={styles.mainContentRight} justifyContent="center">
           <Box className={styles.boxContentRight}>{contentRight}</Box>

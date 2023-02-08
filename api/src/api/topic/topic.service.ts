@@ -35,17 +35,13 @@ export class TopicService {
       accountId: account.id,
       topicId: topic.id,
     };
-    const adminReplyMessage: DeepPartial<Message> = {
-      content: `Chào ${account.fullName}, hệ thống đã nhận được tin nhắn của bạn. Quản trị viên sẽ trả lời bạn sớm!`,
-      topicId: topic.id,
-      accountId: ADMIN_ID,
-    };
-    const messages = await this.messageHelper.insertMany([firstMessage, adminReplyMessage]);
-    const topicUpdate = await this.topicHelper.updateTopic(topic.id, { latestMessageId: messages[1].id });
+
+    const message = await this.messageHelper.insertMessage(firstMessage);
+    const topicUpdate = await this.topicHelper.updateTopic(topic.id, { latestMessageId: message.id });
     this.socketService.socket.emit('topic_received_admin', {
       ...topicUpdate,
       account: account,
-      latestMessage: messages[1],
+      latestMessage: message,
     } as Topic);
 
     return topicUpdate;
