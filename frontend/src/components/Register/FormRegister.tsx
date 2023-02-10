@@ -1,6 +1,6 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
-import { Box, Divider, Link, Stack } from '@mui/material';
+import { Box, Divider, Link, Stack, Typography } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
@@ -50,7 +50,7 @@ export const FormRegister = () => {
         >
           ĐĂNG KÝ
         </Button>
-        <Box style={{ marginTop: 24, marginBottom: 24 }}>
+        <Box className={styles.boxTextBottom}>
           Bằng cách đăng ký DuTalk, bạn đồng ý với{' '}
           <Link style={{ textDecoration: 'underline' }} href="/dieu-khoan">
             Điều khoản dịch vụ
@@ -61,11 +61,11 @@ export const FormRegister = () => {
           </Link>{' '}
           của DuTalk.
         </Box>
-        <Divider />
-
-        <Button href="/dang-nhap" className={styles.btnLoginNow} variant="contained">
-          Đăng nhập ngay
-        </Button>
+        <Typography className={styles.linkWrap}>
+          <a style={{ textDecoration: 'underline' }} href="/dang-nhap">
+            Đăng nhập ngay
+          </a>
+        </Typography>
       </>
     </Stack>
   );

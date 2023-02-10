@@ -1,13 +1,14 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
 import { FieldOtp } from '@common/Form/FieldOtp';
-import { Box, Stack, Typography } from '@mui/material';
+import { Alert, Box, Stack, Typography } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { AlertErrorApp } from 'src/shared/Alert/AlertErrorApp';
 import { formResetPasswordOtpStyles } from './styles/FormResetPasswordOtp.style';
+import EmailIcon from '@mui/icons-material/Email';
 
 export const FormResetPasswordOtp = () => {
   const { handleSubmit, setFieldValue } = useFormikContext();
@@ -21,10 +22,10 @@ export const FormResetPasswordOtp = () => {
   return (
     <Stack>
       <AlertErrorApp error={errorResetPasswordOtp} />
-      <Typography className={styles.description_1}>
-        Mã xác nhận đã được gửi tới địa chỉ email của tài khoản: <b>{credential}</b>. Vui lòng kiểm tra email và nhập
-        đoạn mã dưới đây:
-      </Typography>
+      <Alert icon={<EmailIcon />} security="success" className={styles.description_1}>
+        Mã xác nhận đã được gửi tới địa chỉ email của tài khoản: <b>{credential}</b>. Vui lòng kiểm tra email và nhập mã
+        vào các ô dưới đây.
+      </Alert>
       <Box className={styles.boxOtp}>
         <Field name="otp" label="Nickname" className="otp-register-input" component={FieldOtp} />
         <Field
@@ -47,7 +48,7 @@ export const FormResetPasswordOtp = () => {
           className={styles.btnConfirm}
           variant="contained"
         >
-          Xác minh
+          Gửi yêu cầu
         </Button>
       </Box>
     </Stack>

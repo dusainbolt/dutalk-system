@@ -6,6 +6,7 @@ type DefaultStyle = {
   primaryColor: string;
   ellipseText: (row: number) => any;
   btnStyle: (color?: string) => any;
+  otpStyle: () => any;
   scrollBar: any;
 };
 
@@ -22,12 +23,23 @@ export const DEFAULT_STYLE: DefaultStyle = {
   btnStyle: (color: string = DEFAULT_STYLE.primaryColor) => ({
     borderColor: color,
     background: color,
+    borderRadius: '24px',
+    fontWeight: 500,
 
     '&:hover': {
       borderColor: color,
       background: color,
       opacity: 0.7,
     },
+  }),
+  otpStyle: () => ({
+    width: '95% !important',
+    height: '45px',
+    borderRadius: '4px',
+    border: 0,
+    background: '#f0f0f0',
+    fontSize: 20,
+    fontWeight: 500,
   }),
   scrollBar: {
     scrollbarWidth: 'thin',

@@ -1,6 +1,6 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
@@ -18,7 +18,7 @@ export const FormLogin = () => {
         <Field
           fieldProps={{ type: 'email', placeholder: 'Nhập email hoặc nickname' }}
           name="credential"
-          label="Email hoặc nickname"
+          label="Tên đăng nhập"
           component={FieldText}
         />
         <Field
@@ -29,17 +29,17 @@ export const FormLogin = () => {
         />
 
         <Button loading={loadingLogin} onClick={handleSubmit as any} className={styles.btnLogin} variant="contained">
-          ĐĂNG NHẬP
+          Đăng nhập
         </Button>
-        <Typography className={styles.linkForgotPass}>
+        <Typography className={styles.linkWrap}>
+          <a style={{ textDecoration: 'underline' }} href="/dang-ky">
+            Tạo tài khoản mới
+          </a>
+          <span> | </span>
           <a style={{ textDecoration: 'underline' }} href="/quen-mat-khau">
             Quên mật khẩu
           </a>
         </Typography>
-        <Divider style={{ marginTop: 24 }} />
-        <Button href="/dang-ky" className={styles.btnRegister} variant="contained">
-          Tạo tài khoản mới
-        </Button>
       </>
     </Stack>
   );

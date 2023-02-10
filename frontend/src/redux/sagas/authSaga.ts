@@ -65,6 +65,7 @@ function* watchVerifyOtpRegister({ payload }: VerifyOtpRegisterStartAction) {
     const response = yield AuthRequest.verifyAccount(payload);
     yield delay(Constant.delayAPI);
     if (Helper.isOkResponse(response)) {
+      yield axios.setTokenRequest(response.data?.token as any);
       yield put(verifyOtpRegisterSuccess(response.data));
     } else {
       yield put(verifyOtpRegisterError(response));

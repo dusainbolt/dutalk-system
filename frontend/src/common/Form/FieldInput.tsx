@@ -31,7 +31,7 @@ const FieldText: FC<FieldTextType> = ({
   showError = true,
   className,
   field,
-  onPressSubmitEnter,
+  onPressSubmitEnter = true,
   sx,
   block,
   fieldProps,
@@ -65,7 +65,7 @@ const FieldText: FC<FieldTextType> = ({
   };
 
   const handleKeyPress = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       if (onPressSubmitEnter) {
         e.preventDefault();
         handleSubmit();
@@ -74,7 +74,18 @@ const FieldText: FC<FieldTextType> = ({
   };
 
   return (
-    <Box sx={{ mt: 1, width: '100%', ...sx }} className={clsx(className)}>
+    <Box
+      sx={{
+        mt: 1,
+        width: '100%',
+        ...sx,
+        '& label': {
+          color: '#646A6F',
+          fontSize: 16,
+        },
+      }}
+      className={clsx(className)}
+    >
       <FormLabel fieldName={field?.name} label={label} />
       <TextField
         fullWidth

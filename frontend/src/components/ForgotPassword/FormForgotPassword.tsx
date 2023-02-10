@@ -1,6 +1,6 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
@@ -18,7 +18,7 @@ export const FormForgotPassword = () => {
         <Field
           fieldProps={{ type: 'email', placeholder: 'Nhập email hoặc nickname' }}
           name="credential"
-          label="Email hoặc nickname"
+          label="Tên đăng nhập"
           component={FieldText}
         />
 
@@ -30,15 +30,15 @@ export const FormForgotPassword = () => {
         >
           TÌM KIẾM
         </Button>
-        <Typography className={styles.linkHome}>
-          <a style={{ textDecoration: 'underline' }} href="/">
-            Trang chủ
+        <Typography className={styles.linkWrap}>
+          <a style={{ textDecoration: 'underline' }} href="/dang-ky">
+            Tạo tài khoản mới
+          </a>
+          <span> | </span>
+          <a style={{ textDecoration: 'underline' }} href="/dang-nhap">
+            Đăng nhập
           </a>
         </Typography>
-        <Divider style={{ marginTop: 24 }} />
-        <Button href="/dang-nhap" className={styles.btnLogin} variant="contained">
-          Đăng nhập
-        </Button>
       </>
     </Stack>
   );

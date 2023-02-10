@@ -1,6 +1,7 @@
 import { Button } from '@common/Button';
 import { FieldOtp } from '@common/Form/FieldOtp';
-import { Box, Stack, Typography } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import { Alert, Box, Stack } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
@@ -20,10 +21,10 @@ export const FormRegisterOtp = () => {
   return (
     <Stack>
       <AlertErrorApp error={errorRegister} />
-      <Typography className={styles.description_1}>
-        Mã xác nhận đã được gửi tới địa chỉ email của tài khoản: <b>{credential}</b>. Vui lòng kiểm tra email và nhập
-        đoạn mã dưới đây:
-      </Typography>
+      <Alert icon={<EmailIcon />} security="success" className={styles.description_1}>
+        Mã xác nhận đã được gửi tới địa chỉ email của tài khoản: <b>{credential}</b>. Vui lòng kiểm tra email và nhập mã
+        vào các ô dưới đây.
+      </Alert>
       <Box className={styles.boxOtp}>
         <Field name="otp" label="Nickname" className="otp-register-input" component={FieldOtp} />
         <Button

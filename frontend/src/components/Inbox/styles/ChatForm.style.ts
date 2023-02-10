@@ -1,6 +1,5 @@
 import { Theme } from '@mui/material';
 import { CSSProperties, makeStyles } from '@mui/styles';
-import { DEFAULT_STYLE } from '@styles/theme';
 
 export const chatFormStyle = makeStyles((theme: Theme) => ({
   inputMessage: {
@@ -14,8 +13,6 @@ export const chatFormStyle = makeStyles((theme: Theme) => ({
     } as CSSProperties,
   },
   btnSend: {
-    borderRadius: theme.spacing(3),
-    ...DEFAULT_STYLE.btnStyle(),
     width: 100,
     '& svg.MuiSvgIcon-root': {
       fontSize: 14,

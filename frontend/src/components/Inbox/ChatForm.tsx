@@ -32,7 +32,6 @@ export const ChatForm: FC<{ topicId: number | undefined }> = ({ topicId }) => {
         name="message"
         className={styles.inputMessage}
         fieldProps={{ placeholder: 'Nhập tin nhắn', multiline: true, maxRows: 4 } as TextFieldProps}
-        onPressSubmitEnter
         showError={false}
         component={FieldText}
       />

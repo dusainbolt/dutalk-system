@@ -46,7 +46,7 @@ export const valuesLogin: InputLogin = {
 };
 
 export const validateLogin = yup.object({
-  credential: yup.string().required(Validate.require('Email hoặc nickname')),
+  credential: yup.string().required(Validate.require('Tên đăng nhập')),
   password: yup.string().required(Validate.require('Mật khẩu')).min(8, Validate.min(8)),
 });
 
@@ -55,7 +55,7 @@ export const valuesForgotPassword: InputForgotPassword = {
 };
 
 export const validateForgotPassword = yup.object({
-  credential: yup.string().required(Validate.require('Email hoặc nickname')),
+  credential: yup.string().required(Validate.require('Tên đăng nhập')),
 });
 
 export const valuesResetPasswordOtp: InputResetPasswordOtp = {
@@ -66,7 +66,7 @@ export const valuesResetPasswordOtp: InputResetPasswordOtp = {
 };
 
 export const validateResetPasswordOtp = yup.object({
-  credential: yup.string().required(Validate.require('Email hoặc nickname')),
+  credential: yup.string().required(Validate.require('Tên đăng nhập')),
   otp: yup.string().required(Validate.require('Mã xác nhận')).length(6, Validate._length(6)),
   password: yup.string().required(Validate.require('Mật khẩu')).min(8, Validate.min(8)),
   rePassword: yup

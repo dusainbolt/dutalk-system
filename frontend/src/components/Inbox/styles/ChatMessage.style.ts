@@ -14,5 +14,11 @@ export const chatMessageStyles = makeStyles((theme: Theme) => ({
     fontSize: 12,
   },
   wrapMessage: { width: '90%', marginBottom: theme.spacing(0.5), position: 'relative' },
-  wrapMessageChild: { color: '#4A5056', padding: theme.spacing(1), fontSize: 15, borderRadius: theme.spacing(1) },
+  wrapMessageChild: {
+    color: '#4A5056',
+    padding: theme.spacing(1),
+    fontSize: 15,
+    borderRadius: theme.spacing(1),
+    whiteSpace: 'pre-wrap',
+  },
 }));
