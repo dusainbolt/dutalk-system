@@ -76,3 +76,12 @@
 /api/terraform
 
 /api/dump.rdb
+
+
+## Deploy Service
+
+/deployment/node_modules
+/deployment/config/key_pair.pem
+/deployment/.env
+/deployment/frontend/.env
+/deployment/api/.env
