@@ -4,8 +4,6 @@ import { socketNewTopicReceive, socketTopicMessagesReceive } from '@redux/slices
 import { Account, AccountRole } from '@type/account';
 import { Message } from '@type/message';
 import { SocketSendMessageDto, SocketTopicMessagesReceiveDto } from '@type/socket';
-import Constant from '@utils/constant';
-import Helper from '@utils/helper';
 import { toast } from 'react-toastify';
 import { Socket } from 'socket.io-client';
 

@@ -1,6 +1,6 @@
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { getAuthSlice } from '@redux/slices/authSlice';
-import { initSocketStart, sendMessageStart } from '@redux/slices/socketSlice';
+import { initSocketStart } from '@redux/slices/socketSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import { useEffect } from 'react';
 

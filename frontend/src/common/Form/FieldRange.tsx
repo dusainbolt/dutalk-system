@@ -18,7 +18,7 @@ export interface FieldRangeType {
 export const FieldRange: FC<FieldRangeType> = ({ label, className, sx, field }) => {
   const [value, setValue] = useState<number[]>([20, 37]);
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (_event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 

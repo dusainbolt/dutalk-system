@@ -1,6 +1,6 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
-import { Box, Divider, Link, Stack, Typography } from '@mui/material';
+import { Box, Link, Stack, Typography } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';

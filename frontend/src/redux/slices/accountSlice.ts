@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import { GetAccountSuccessAction } from '@redux/actions/accountAction';
-import { LoginSuccessAction } from '@redux/actions/authAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AccountSlice } from '@type/account';

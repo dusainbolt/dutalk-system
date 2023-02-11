@@ -1,4 +1,4 @@
-import { Box, Chip, Divider, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { useAppSelector } from '@redux/store';
 import { Message } from '@type/message';

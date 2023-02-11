@@ -4,7 +4,6 @@ import useAuth from '@hooks/useAuth';
 import { Alert, Box } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
-import { DEFAULT_STYLE } from '@styles/theme';
 import { StepRegister } from '@type/auth';
 import { Formik } from 'formik';
 import { FC, Fragment, useMemo } from 'react';

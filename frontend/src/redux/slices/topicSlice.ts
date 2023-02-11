@@ -48,7 +48,8 @@ const topicSlice = createSlice({
     },
 
     // get topics dispatch
-    getMyTopicsStart: (state: TopicSlice, { payload }: GetMyTopicsStartAction) => {
+    // eslint-disable-next-line no-empty-pattern
+    getMyTopicsStart: (state: TopicSlice, {}: GetMyTopicsStartAction) => {
       state.loadingGetTopics = true;
     },
     getMyTopicsSuccess: (state: TopicSlice, { payload }: GetMyTopicsSuccessAction) => {
@@ -64,7 +65,8 @@ const topicSlice = createSlice({
     },
 
     // get topics on system dispatch
-    getSystemTopicsStart: (state: TopicSlice, { payload }: GetSystemTopicsStartAction) => {
+    // eslint-disable-next-line no-empty-pattern
+    getSystemTopicsStart: (state: TopicSlice, {}: GetSystemTopicsStartAction) => {
       state.loadingGetTopics = true;
     },
     getSystemTopicsSuccess: (state: TopicSlice, { payload }: GetSystemTopicsSuccessAction) => {

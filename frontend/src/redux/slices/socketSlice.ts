@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { SendMessageStartAction, SendMessageSuccessAction } from '@redux/actions/socketAction';
-import { SocketTopicMessagesReceiveAction } from '@redux/actions/topicAction';
+import { SendMessageStartAction } from '@redux/actions/socketAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { SocketSlice } from '@type/socket';

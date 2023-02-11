@@ -1,14 +1,14 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
 import { FieldOtp } from '@common/Form/FieldOtp';
-import { Alert, Box, Stack, Typography } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import { Alert, Box, Stack } from '@mui/material';
 import { getAuthSlice } from '@redux/slices/authSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { AlertErrorApp } from 'src/shared/Alert/AlertErrorApp';
 import { formResetPasswordOtpStyles } from './styles/FormResetPasswordOtp.style';
-import EmailIcon from '@mui/icons-material/Email';
 
 export const FormResetPasswordOtp = () => {
   const { handleSubmit, setFieldValue } = useFormikContext();

@@ -4,7 +4,7 @@ import { Restrict } from '@type/field';
 import Helper from '@utils/helper';
 import clsx from 'clsx';
 import { FieldInputProps, FieldMetaProps, useFormikContext } from 'formik';
-import { FC, FormEvent, KeyboardEventHandler } from 'react';
+import { FC, FormEvent } from 'react';
 import { FormLabel } from './FormLabel';
 
 export type ValidateBlock = {
