@@ -1,22 +1,24 @@
 /* eslint-disable no-console */
 import { SocketActions } from '@redux/actions/socketAction';
 import { getAccountSlice, getAccountSuccess } from '@redux/slices/accountSlice';
-import { getAuthSlice, logoutSuccess } from '@redux/slices/authSlice';
+import { getAuthSlice } from '@redux/slices/authSlice';
 import { initSocketStart, sendMessageStart } from '@redux/slices/socketSlice';
-import { addTopicSuccess } from '@redux/slices/topicSlice';
 import { AccountSlice } from '@type/account';
 import { AuthSlice } from '@type/auth';
 import { eventChannel } from 'redux-saga';
-import { call, cancel, fork, put, select, take, takeEvery } from 'redux-saga/effects';
+import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects';
 import { io, Socket } from 'socket.io-client';
 
 function connect(token: string) {
-  const url = 'http://localhost:8001';
+  const url = process.env.NEXT_PUBLIC_WEB_SOCKET as any;
   const socket = io(url, { query: { token: token }, transports: ['websocket', 'polling'] });
   return new Promise((resolve) => {
     socket.on('connect', () => {
       console.log(`==========> CONNECT SOCKET SUCCESS: ${socket.id}`);
       resolve(socket);
+    });
+    socket.on('connect_error', (message: any) => {
+      console.log('Connection Failed: ', message);
     });
   });
 }

@@ -49,6 +49,10 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   async handleConnection(client: Socket) {
     this.logger.info('Client connected: ' + client.id);
     const account = await this.getAccountFormSocket(client);
+    if (!account) {
+      client.disconnect();
+      return;
+    }
     // save info in cache
     await this.cacheManager.set(Generate.keySocketClient(client.id), account.id, {
       ttl: this.configService.get<IConfigRedis>('redis').ttlSocketClient,
@@ -76,8 +80,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
         topic,
       } as SocketTopicMessagesReceiveDto);
       this.server.emit(`message_received_admin`, { message: newMessage, topic } as SocketTopicMessagesReceiveDto);
-
-      console.log('Data: ', data);
     } catch (e) {
       this.logger.info(e, 'receiveMessagesFromClient ERROR:');
       this.server.emit(`message_received_${userId}`, Generate.errorSocket(e));
