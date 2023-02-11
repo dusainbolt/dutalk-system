@@ -51,6 +51,7 @@ export type TopicSlice = {
   errorGetTopics?: AppError;
   errorGetTopicMessages?: AppError;
   loadedListTopic?: boolean;
+
   // data
   listTopics?: Topic[];
   topic?: Topic;

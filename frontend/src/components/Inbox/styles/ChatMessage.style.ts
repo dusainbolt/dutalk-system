@@ -20,5 +20,11 @@ export const chatMessageStyles = makeStyles((theme: Theme) => ({
     fontSize: 15,
     borderRadius: theme.spacing(1),
     whiteSpace: 'pre-wrap',
+
+    // display
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '100%',
+    wordBreak: 'break-word',
   },
 }));

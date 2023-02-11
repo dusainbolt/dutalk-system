@@ -9,6 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import { AccountRole } from '@type/account';
 import { InputTopic } from '@type/topic';
+import { useState } from 'react';
 
 export interface UseTopic {
   onSubmitAddTopic: (values: InputTopic) => void;
@@ -19,6 +20,8 @@ export interface UseTopic {
 }
 
 function useTopic(): UseTopic {
+  // const [limit, setLimit] = useState<number>(20);
+  // const [page, setPage] = useState<number>1);
   const dispatch = useAppDispatch();
   const { account } = useAppSelector(getAccountSlice);
 
@@ -41,7 +44,7 @@ function useTopic(): UseTopic {
   };
 
   const getTopicMessages = (topicId: string) => {
-    dispatch(getTopicMessagesStart({ topicId, query: { sort: 'id.ASC', limit: 30 } }));
+    dispatch(getTopicMessagesStart({ topicId, query: { sort: 'id.DESC', limit: 20 } }));
   };
 
   return { onSubmitAddTopic, getMyTopics, getSystemTopics, getTopicDetail, getTopicMessages };

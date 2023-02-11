@@ -5,7 +5,7 @@ import useMessage from '@hooks/useMessage';
 import useTopic from '@hooks/useTopic';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import InfoIcon from '@mui/icons-material/Info';
-import { Alert, Box, Container, Hidden, Stack, Typography } from '@mui/material';
+import { Alert, Box, Container, Hidden, Stack, Typography, useScrollTrigger } from '@mui/material';
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { openDialogApp, showChatListMobile } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
@@ -16,7 +16,7 @@ import { useRouter } from 'next/dist/client/router';
 import { FC, useEffect, useState } from 'react';
 import { validateSendMessage, valuesSendMessage } from 'src/yup/validateMessage';
 import { ChatForm } from './ChatForm';
-import { ChatMessage, checkShowTime } from './ChatMessage';
+import { ChatMessage, checkShowTime, checkStartMessageOfUser } from './ChatMessage';
 import { ChatTopicInfo } from './ChatTopicInfo';
 import { inboxChatStyles } from './styles/InboxChatStyle';
 
@@ -28,8 +28,28 @@ export const InboxChatComponent: FC<any> = () => {
   const dispatch = useAppDispatch();
   const route = useRouter();
   const [refBoxChat, setRefBoxChat] = useState<HTMLDivElement>(undefined as any);
+  const [loadedTopicMessages, setLoadedTopicMessages] = useState<boolean>(false);
   const { onSubmitSendMessage } = useMessage();
   const styles = inboxChatStyles();
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    target: refBoxChat || undefined,
+  });
+
+  useEffect(() => {
+    if (topicMessages?.length && !trigger && loadedTopicMessages) {
+      console.log('loadmore');
+    }
+  }, [trigger, topicMessages]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (topicMessages?.length) {
+        setLoadedTopicMessages(true);
+      }
+    });
+  }, [topicMessages?.length]);
 
   // effect auto scroll box chat
   useEffect(() => {
@@ -101,6 +121,7 @@ export const InboxChatComponent: FC<any> = () => {
                   <ChatMessage
                     message={message}
                     isShowTime={checkShowTime(topicMessages, message, index)}
+                    isStartMessage={checkStartMessageOfUser(topicMessages, message, index)}
                     index={index}
                     key={index}
                   />
