@@ -1,7 +1,7 @@
 import { Button } from '@common/Button';
 import FieldText from '@common/Form/FieldInput';
 import SendIcon from '@mui/icons-material/Send';
-import { Stack, TextFieldProps, Typography } from '@mui/material';
+import { Stack, TextFieldProps } from '@mui/material';
 import { getSocketSlice } from '@redux/slices/socketSlice';
 import { useAppSelector } from '@redux/store';
 import { Field, useFormikContext } from 'formik';

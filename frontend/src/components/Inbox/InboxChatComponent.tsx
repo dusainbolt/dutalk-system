@@ -6,7 +6,7 @@ import useMessage from '@hooks/useMessage';
 import useTopic, { queryTopicMessages } from '@hooks/useTopic';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import InfoIcon from '@mui/icons-material/Info';
-import { Alert, Box, Container, Hidden, Stack, Typography, useScrollTrigger } from '@mui/material';
+import { Box, Container, Hidden, Stack, Typography, useScrollTrigger } from '@mui/material';
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { openDialogApp, showChatListMobile } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
