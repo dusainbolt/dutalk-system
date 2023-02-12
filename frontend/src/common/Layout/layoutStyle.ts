@@ -17,7 +17,6 @@ export const layoutStyle = makeStyles((theme: Theme) => ({
   },
   body: {
     display: 'flex',
-    // minHeight: '100vh',
     flex: '1 1',
   },
   bodyContent: {

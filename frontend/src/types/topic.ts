@@ -33,8 +33,10 @@ export interface GetTopicDetailDto {
 }
 
 export interface GetTopicMessagesDto {
-  topicId?: string;
-  query?: IPaginationQuery;
+  topicId?: number;
+  query?: IPaginationQuery & {
+    latestMessageId?: number;
+  };
 }
 
 export type TopicCreateDto = InputTopic;
@@ -46,11 +48,15 @@ export type TopicSlice = {
   loadingGetTopic?: boolean;
   loadingGetTopics?: boolean;
   loadingGetTopicMessages?: boolean;
+  loadingLoadMoreTopicMessages?: boolean;
   errorAddTopic?: AppError;
   errorGetTopic?: AppError;
   errorGetTopics?: AppError;
   errorGetTopicMessages?: AppError;
   loadedListTopic?: boolean;
+
+  // query logic
+  queryTopicMessages?: IPaginationQuery;
 
   // data
   listTopics?: Topic[];

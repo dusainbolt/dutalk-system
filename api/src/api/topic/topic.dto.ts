@@ -13,6 +13,9 @@ export class TopicGetByUserDto extends PaginateOptionsDto {
   @IsSwaggerString({ default: 'false' }, false)
   lastMessage: string;
 
+  @IsSwaggerString({ default: '0' }, false)
+  latestMessageId?: string;
+
   @IsSwaggerString({ default: 'false' }, false)
   account: string;
 }

@@ -28,7 +28,7 @@ export const ChatForm: FC<{ topicId: number | undefined }> = ({ topicId }) => {
 
   return (
     <Fragment>
-      <Stack direction="row" alignItems="flex-end" spacing={1}>
+      <Stack sx={{ paddingBottom: 1.5 }} direction="row" alignItems="flex-end" spacing={1}>
         <Field
           name="message"
           className={styles.inputMessage}

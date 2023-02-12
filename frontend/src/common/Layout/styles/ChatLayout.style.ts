@@ -31,11 +31,11 @@ export const chatLayoutStyles = (drawerWidth: number) =>
       } as CSSProperties,
     },
     boxMain: {
-      flexGrow: 1,
-      marginTop: '64px',
-      maxHeight: 'calc(100vh - 64px)',
       overflow: 'hidden',
       position: 'relative',
+      top: 64,
+      flexGrow: 1,
+      height: 'calc(calc(var(--vh, 1vh) * 100) - 64px)',
       [theme.breakpoints.up('sm')]: {
         width: `calc(100% - ${drawerWidth}px)`,
       } as CSSProperties,

@@ -1,3 +1,5 @@
+import { IPaginationQuery } from '@type/context';
+
 const Constant = {
   form: { UNKNOWN_LABEL: 'Unknown label', TYPE_TEXT: 'text', TYPE_PASSWORD: 'password' },
   date: {

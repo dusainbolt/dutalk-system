@@ -8,9 +8,9 @@ import { Message } from 'src/entities/message.entity';
 import { Topic } from 'src/entities/topic.entity';
 import { AppGateway } from 'src/gatewaies/app.gateway';
 import { SocketService } from 'src/gatewaies/socket.service';
-import { DeepPartial } from 'typeorm';
+import { DeepPartial, LessThan } from 'typeorm';
 import { AccountHelper } from '../account/account.helper.service';
-import { MessageHelper } from '../message/message.helper.service';
+import { FilterMessages, MessageHelper } from '../message/message.helper.service';
 import { TopicCreateDto, TopicGetByAdmin, TopicGetByUserDto, TopicGetDetailDto } from './topic.dto';
 import { TopicHelper } from './topic.helper.service';
 
@@ -48,8 +48,9 @@ export class TopicService {
   }
 
   async getTopicDetail(account: Account, topicId: number, query: TopicGetDetailDto) {
+    console.log('account: ', account);
     const topicByOwner = await this.topicHelper.checkOwnerTopic(account.id, topicId);
-    if (query.account === 'true') {
+    if (query.account === 'true' && topicByOwner?.accountId) {
       topicByOwner.account = await this.accountHelper.findAccount({ id: topicByOwner.accountId });
     }
     return topicByOwner;
@@ -83,7 +84,13 @@ export class TopicService {
 
   async getMessagesOfTopic(account: Account, topicId: number, data: TopicGetByUserDto) {
     await this.topicHelper.checkOwnerTopic(account.id, topicId);
-    const { take, skip, order, ...options } = getDefaultQuery(data);
-    return await this.messageHelper.findMessages({ topicId }, { take, skip, order });
+    let { take, skip, order, ...options } = getDefaultQuery(data);
+
+    let conditions: FilterMessages = { topicId };
+    if (data.latestMessageId) {
+      skip = 0;
+      conditions = { ...conditions, id: LessThan(data.latestMessageId) as any };
+    }
+    return await this.messageHelper.findMessages(conditions, { take, skip, order });
   }
 }

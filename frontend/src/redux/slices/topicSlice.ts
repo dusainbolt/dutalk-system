@@ -104,10 +104,13 @@ const topicSlice = createSlice({
     // get topic messages dispatch
     getTopicMessagesStart: (state: TopicSlice, { payload }: GetTopicMessagesStartAction) => {
       state.loadingGetTopicMessages = !!payload.topicId;
+      state.loadingLoadMoreTopicMessages = payload.query?.latestMessageId ? true : undefined;
     },
     getTopicMessagesSuccess: (state: TopicSlice, { payload }: GetTopicMessagesSuccessAction) => {
       state.loadingGetTopicMessages = false;
       state.errorGetTopicMessages = undefined;
+      state.loadingLoadMoreTopicMessages =
+        typeof state.loadingLoadMoreTopicMessages === 'undefined' ? undefined : false;
       if (payload && payload?.length) {
         state.topicMessages = state.topicMessages ? payload.reverse().concat(state.topicMessages) : payload.reverse();
       }

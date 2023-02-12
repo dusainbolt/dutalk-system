@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from 'src/entities/message.entity';
 import { DeepPartial, FindOptionsOrder, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 
+export type FilterMessages = FindOptionsWhere<Message>[] | FindOptionsWhere<Message>;
 @Injectable()
 export class MessageHelper {
   constructor(@InjectRepository(Message) private messageRepo: Repository<Message>) {}
