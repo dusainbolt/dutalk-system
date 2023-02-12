@@ -84,6 +84,12 @@ const topicSlice = createSlice({
     // get topic detail dispatch
     getTopicDetailStart: (state: TopicSlice, { payload }: GetTopicDetailStartAction) => {
       state.loadingGetTopic = !!payload.topicId;
+      // check reset message when switch new topic
+      if (state.topicMessages && state.topicMessages.length) {
+        if (state.topicMessages[0]?.topicId?.toString() !== payload.topicId) {
+          state.topicMessages = [];
+        }
+      }
     },
     getTopicDetailSuccess: (state: TopicSlice, { payload }: GetTopicDetailSuccessAction) => {
       state.loadingGetTopic = false;
@@ -98,11 +104,16 @@ const topicSlice = createSlice({
     // get topic messages dispatch
     getTopicMessagesStart: (state: TopicSlice, { payload }: GetTopicMessagesStartAction) => {
       state.loadingGetTopicMessages = !!payload.topicId;
+      state.loadingLoadMoreTopicMessages = payload.query?.latestMessageId ? true : undefined;
     },
     getTopicMessagesSuccess: (state: TopicSlice, { payload }: GetTopicMessagesSuccessAction) => {
       state.loadingGetTopicMessages = false;
       state.errorGetTopicMessages = undefined;
-      state.topicMessages = payload;
+      state.loadingLoadMoreTopicMessages =
+        typeof state.loadingLoadMoreTopicMessages === 'undefined' ? undefined : false;
+      if (payload && payload?.length) {
+        state.topicMessages = state.topicMessages ? payload.reverse().concat(state.topicMessages) : payload.reverse();
+      }
     },
     getTopicMessagesError: (state: TopicSlice, { payload }: ErrorAction) => {
       state.loadingGetTopicMessages = false;

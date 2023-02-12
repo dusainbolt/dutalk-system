@@ -22,7 +22,8 @@ export interface FieldTextType {
   meta?: FieldMetaProps<any>;
   fieldProps?: TextFieldProps;
   block?: ValidateBlock;
-  onPressSubmitEnter?: boolean;
+  onPressSubmitEnter?: any;
+  enableSubmit?: boolean;
   showError?: boolean;
 }
 
@@ -32,6 +33,7 @@ const FieldText: FC<FieldTextType> = ({
   className,
   field,
   onPressSubmitEnter = true,
+  enableSubmit = true,
   sx,
   block,
   fieldProps,
@@ -68,7 +70,7 @@ const FieldText: FC<FieldTextType> = ({
     if (e.key === 'Enter' && !e.shiftKey) {
       if (onPressSubmitEnter) {
         e.preventDefault();
-        handleSubmit();
+        enableSubmit && handleSubmit();
       }
     }
   };
