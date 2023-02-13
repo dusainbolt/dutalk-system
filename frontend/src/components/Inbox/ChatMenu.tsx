@@ -1,16 +1,13 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { ButtonIcon } from '@common/Button/ButtonIcon';
+import useAuth from '@hooks/useAuth';
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { ButtonIcon } from '@common/Button/ButtonIcon';
-import MenuIcon from '@mui/icons-material/Menu';
+import { alpha, styled } from '@mui/material/styles';
 import { useRouter } from 'next/dist/client/router';
-import useAuth from '@hooks/useAuth';
+import * as React from 'react';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -89,21 +86,12 @@ export const ChatMenu = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleRedirect('/')} disableRipple>
-          <EditIcon />
+          <HomeIcon />
           Trang chủ
         </MenuItem>
         <MenuItem onClick={onLogout} disableRipple>
-          <FileCopyIcon />
-          Dang xuất
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
+          <LogoutIcon />
+          Đăng xuất
         </MenuItem>
       </StyledMenu>
     </div>

@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { Button } from '@common/Button';
+import { DialogAccountInfo } from '@common/Dialog/DialogAccountInfo';
 import { TopicForm } from '@components/Inbox/TopicForm';
 import useTopic from '@hooks/useTopic';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
@@ -10,9 +11,9 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import { getAccountSlice } from '@redux/slices/accountSlice';
-import { getLayoutSlice } from '@redux/slices/layoutSlice';
+import { getLayoutSlice, openDialogApp } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
-import { useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import { AccountRole } from '@type/account';
 import { Formik } from 'formik';
 import { ReactNode, useEffect, useState } from 'react';
@@ -44,9 +45,19 @@ export const ChatLayout = (props: Props) => {
   const { isShowChatListMobile } = useAppSelector(getLayoutSlice);
   const { getMyTopics } = useTopic();
   const styles = chatLayoutStyles(drawerWidth)();
+  const dispatch = useAppDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const clickViewAccountInfo = () => {
+    dispatch(
+      openDialogApp({
+        title: 'Thông tin người dùng',
+        content: <DialogAccountInfo />,
+      })
+    );
   };
 
   useEffect(() => {
@@ -66,7 +77,11 @@ export const ChatLayout = (props: Props) => {
           {isAdmin ? (
             <Chip label="Admin" color="success" variant="outlined" />
           ) : (
-            <Chip avatar={<Avatar>{account?.fullName.split('')[0]}</Avatar>} label={account?.fullName} />
+            <Chip
+              onClick={clickViewAccountInfo}
+              avatar={<Avatar>{account?.fullName.split('')[0]}</Avatar>}
+              label={account?.fullName}
+            />
           )}
         </Stack>
       </Toolbar>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "prepare": "husky install",
     "format": "prettier --write \"{src,__tests__}/**/*.{js,ts,tsx}\"",
     "lint": "eslint \"{src,__tests__}/**/*.{js,ts,tsx}\" --fix",
     "start": "next start",
@@ -68,6 +69,7 @@
     "husky": "^8.0.3",
     "jest": "^27.0.6",
     "jest-environment-jsdom": "^27.0.6",
+    "lint-staged": "^13.1.1",
     "prettier": "^2.3.2",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"

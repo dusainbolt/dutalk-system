@@ -1,12 +1,11 @@
 import { ButtonIcon } from '@common/Button/ButtonIcon';
-import { AppDialog } from '@common/Dialog';
 import { ChatLayout } from '@common/Layout/ChatLayout';
 import LoadingCircular from '@common/Progress/LoadingCircular';
 import useMessage from '@hooks/useMessage';
 import useTopic, { queryTopicMessages } from '@hooks/useTopic';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import InfoIcon from '@mui/icons-material/Info';
-import { Box, Container, Hidden, Stack, Typography, useScrollTrigger } from '@mui/material';
+import { Alert, Box, Container, Hidden, Stack, Typography, useScrollTrigger } from '@mui/material';
 import { getAccountSlice } from '@redux/slices/accountSlice';
 import { openDialogApp, showChatListMobile } from '@redux/slices/layoutSlice';
 import { getTopicSlice } from '@redux/slices/topicSlice';
@@ -97,6 +96,7 @@ export const InboxChatComponent: FC<any> = () => {
 
   const backToChatList = () => {
     dispatch(showChatListMobile(true));
+    window.history.pushState({ page: 'another' }, 'another page', '/hop-thu');
   };
 
   const onClickViewInfo = () => {
@@ -154,6 +154,13 @@ export const InboxChatComponent: FC<any> = () => {
                     key={index}
                   />
                 ))}
+                {topicMessages?.length === 1 && account?.role !== AccountRole.ADMIN && (
+                  <Box style={{ marginTop: 8 }}>
+                    <Alert
+                      style={{ width: '100%' }}
+                    >{`Chào ${account?.fullName}, hệ thống đã nhận được tin nhắn của bạn. Quản trị viên sẽ trả lời bạn sớm!`}</Alert>
+                  </Box>
+                )}
                 <Box style={{ height: 10, width: '100%', float: 'right' }}></Box>
               </Box>
             </Container>
@@ -171,8 +178,6 @@ export const InboxChatComponent: FC<any> = () => {
           </Box>
         </Stack>
       )}
-      {/* import dialog */}
-      <AppDialog />
     </ChatLayout>
   );
 };

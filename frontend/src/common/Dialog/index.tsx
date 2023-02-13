@@ -14,7 +14,7 @@ import { FormEvent, useState } from 'react';
 
 export const AppDialog = () => {
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { dialog } = useAppSelector(getLayoutSlice);
   const [value, setValue] = useState<string>('');
   const dispatch = useAppDispatch();

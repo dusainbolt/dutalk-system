@@ -1,12 +1,14 @@
 import { InboxComponent } from '@components/Inbox/InboxComponent';
 import { useGetAccountInfo } from '@hooks/useGetAccountInfo';
 import { useRedirectAuth } from '@hooks/useRedirectAuth';
+import useSocket from '@hooks/useSocket';
 import Head from 'next/head';
 import { FC, Fragment } from 'react';
 
 const InboxDefaultPage: FC<any> = () => {
   const token = useRedirectAuth({ redirect: '/', isEmptyToken: false });
   useGetAccountInfo(token as string);
+  useSocket();
 
   return (
     <Fragment>
